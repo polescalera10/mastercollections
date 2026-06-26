@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { Reveal } from './Reveal';
 
 export function About() {
@@ -7,22 +8,13 @@ export function About() {
         {/* Foto real de Toni */}
         <Reveal>
           <div className="relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-2xl border border-cream/10 bg-ink">
-            {/*
-              TODO: cuando tengas la foto, sustituye el img por:
-              import Image from 'next/image';
-              <Image src="/toni.jpg" alt="Toni, fundador de Master Collections"
-                     fill className="object-cover object-top" sizes="(max-width:1024px) 100vw, 40vw" />
-              Y elimina el <img> placeholder de abajo.
-            */}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/placeholder-person.svg"
-              alt="Foto de Toni — fundador de Master Collections (placeholder)"
-              className="absolute inset-0 h-full w-full object-cover object-top"
+            <Image
+              src="/brand/toni.jpeg"
+              alt="Toni, fundador de Master Collections"
+              fill
+              sizes="(max-width: 1024px) 100vw, 40vw"
+              className="object-cover object-center"
             />
-            <span className="absolute bottom-4 left-4 rounded-full bg-ink/70 px-3 py-1 text-xs text-muted backdrop-blur-sm">
-              TODO: foto real de Toni
-            </span>
           </div>
         </Reveal>
 

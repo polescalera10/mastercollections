@@ -77,11 +77,6 @@ export default function GraciasPage() {
             buenos, los relojes que sí se venden, y donde aprendemos todos, cada semana.
           </p>
           <div className="mt-5">
-            {/*
-              NOTA: el email de entrega original usaba otro enlace de Telegram
-              (https://t.me/+C2kkMbWHo20xODA0). Confirmar cuál es el canal canónico
-              y, si procede, pasarlo como prop label/href aquí.
-            */}
             <TelegramButton label="Entrar al canal" />
           </div>
         </div>

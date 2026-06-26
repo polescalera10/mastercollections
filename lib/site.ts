@@ -8,13 +8,10 @@ export const siteUrl = 'https://www.mastercollectionsclub.com';
 
 export const links = {
   telegram: 'https://t.me/+ftxLu95f1scyZmZk',
-  // NOTA: el email de entrega del ebook usa otro enlace de Telegram
-  // (https://t.me/+C2kkMbWHo20xODA0). Confirmar cuál es el canal canónico.
   youtube: 'https://www.youtube.com/@MasterCollectionsClub',
   instagram: 'https://www.instagram.com/mastercollections_',
-  // TODO: confirmar el handle real de TikTok (la comunidad presume de +6.000 en TikTok).
-  // Candidato sin verificar; sustituir por la URL correcta.
-  tiktok: 'https://www.tiktok.com/@mastercollections_',
+  // TikTok = perfil personal de Toni.
+  tiktok: 'https://www.tiktok.com/@toniiabella',
 } as const;
 
 /** URL del ebook alojado en nuestra propia web (sustituye a la librería de WordPress). */
