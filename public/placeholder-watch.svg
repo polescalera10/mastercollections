@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" width="1440" height="900">
+  <defs>
+    <radialGradient id="bg" cx="70%" cy="20%" r="80%">
+      <stop offset="0%" stop-color="#1e1810" />
+      <stop offset="100%" stop-color="#0B0A09" />
+    </radialGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#C8A24C" stop-opacity="0.18" />
+      <stop offset="100%" stop-color="#C8A24C" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <!-- Fondo -->
+  <rect width="1440" height="900" fill="url(#bg)" />
+
+  <!-- Brillo central dorado -->
+  <ellipse cx="960" cy="450" rx="420" ry="420" fill="url(#glow)" />
+
+  <!-- Reloj — caja exterior -->
+  <circle cx="960" cy="450" r="220" fill="none" stroke="#C8A24C" stroke-width="1.2" stroke-opacity="0.4" />
+  <circle cx="960" cy="450" r="200" fill="#0e0d0b" stroke="#C8A24C" stroke-width="0.6" stroke-opacity="0.25" />
+
+  <!-- Marcadores de hora -->
+  <g stroke="#C8A24C" stroke-width="1.5" stroke-opacity="0.7">
+    <!-- 12 -->
+    <line x1="960" y1="265" x2="960" y2="285" />
+    <!-- 3 -->
+    <line x1="1145" y1="450" x2="1125" y2="450" />
+    <!-- 6 -->
+    <line x1="960" y1="635" x2="960" y2="615" />
+    <!-- 9 -->
+    <line x1="775" y1="450" x2="795" y2="450" />
+  </g>
+
+  <!-- Marcadores menores -->
+  <g stroke="#C8A24C" stroke-width="0.8" stroke-opacity="0.35">
+    <line x1="1052" y1="281" x2="1044" y2="295" />
+    <line x1="1129" y1="358" x2="1115" y2="366" />
+    <line x1="1129" y1="542" x2="1115" y2="534" />
+    <line x1="1052" y1="619" x2="1044" y2="605" />
+    <line x1="868" y1="281" x2="876" y2="295" />
+    <line x1="791" y1="358" x2="805" y2="366" />
+    <line x1="791" y1="542" x2="805" y2="534" />
+    <line x1="868" y1="619" x2="876" y2="605" />
+  </g>
+
+  <!-- Manecilla minutero -->
+  <line x1="960" y1="450" x2="1010" y2="300" stroke="#F6F1E8" stroke-width="2" stroke-linecap="round" stroke-opacity="0.9" />
+  <!-- Manecilla horaria -->
+  <line x1="960" y1="450" x2="1060" y2="390" stroke="#F6F1E8" stroke-width="2.5" stroke-linecap="round" stroke-opacity="0.9" />
+  <!-- Centro -->
+  <circle cx="960" cy="450" r="5" fill="#C8A24C" />
+
+  <!-- Correa superior -->
+  <rect x="930" y="50" width="60" height="220" rx="8" fill="#1a1510" stroke="#C8A24C" stroke-width="0.6" stroke-opacity="0.3" />
+  <!-- Correa inferior -->
+  <rect x="930" y="680" width="60" height="200" rx="8" fill="#1a1510" stroke="#C8A24C" stroke-width="0.6" stroke-opacity="0.3" />
+
+  <!-- Texto placeholder — zona izquierda vacía para imagen final -->
+  <text x="100" y="860" font-family="Georgia, serif" font-size="13" fill="#C8A24C" fill-opacity="0.35" letter-spacing="3">TODO: sustituir por foto real de reloj en macro</text>
+</svg>

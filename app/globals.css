@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-ink text-cream font-sans antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Tipografía de cuerpo legible */
+  p {
+    @apply leading-relaxed;
+  }
+
+  /* Foco visible y accesible en toda la página */
+  :focus-visible {
+    @apply outline-none ring-2 ring-action ring-offset-2 ring-offset-ink rounded-sm;
+  }
+
+  /* Respeta a quien prefiere menos movimiento */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* Contenedor estándar de página */
+  .container-page {
+    @apply mx-auto w-full max-w-content px-5 sm:px-8;
+  }
+
+  /* CTA primario: el ÚNICO color de acción, destaca sobre el dorado */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2.5 rounded-full bg-action px-7 py-4
+           text-base font-semibold text-white shadow-lg shadow-action/20
+           transition-colors duration-200 hover:bg-action-dark cursor-pointer;
+  }
+
+  /* CTA secundario: contorno discreto, nunca compite con el primario */
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-cream/20
+           px-6 py-3 text-sm font-medium text-cream/90
+           transition-colors duration-200 hover:border-gold hover:text-gold cursor-pointer;
+  }
+
+  /* Etiqueta editorial dorada sobre cada sección */
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.2em] text-gold;
+  }
+}
+
+/* Degradado de textura sutil para fondos de sección */
+.bg-grain {
+  background-image:
+    radial-gradient(60% 60% at 50% 0%, rgba(200, 162, 76, 0.06) 0%, rgba(11, 10, 9, 0) 70%);
+}
