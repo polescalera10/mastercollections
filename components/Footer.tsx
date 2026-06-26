@@ -1,11 +1,14 @@
 import Link from 'next/link';
 import { links } from '@/lib/site';
-import { TelegramIcon, YouTubeIcon, InstagramIcon } from './Icons';
+import { Logo } from './Logo';
+import { TelegramIcon, YouTubeIcon, InstagramIcon, TikTokIcon } from './Icons';
 
 const social = [
   { href: links.telegram, label: 'Telegram', Icon: TelegramIcon },
   { href: links.youtube, label: 'YouTube', Icon: YouTubeIcon },
   { href: links.instagram, label: 'Instagram', Icon: InstagramIcon },
+  // TODO: confirmar handle de TikTok en lib/site.ts
+  { href: links.tiktok, label: 'TikTok', Icon: TikTokIcon },
 ];
 
 export function Footer() {
@@ -15,11 +18,7 @@ export function Footer() {
     <footer className="border-t border-cream/10 bg-graphite/60">
       <div className="container-page flex flex-col gap-8 py-12 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <Link href="/" className="flex items-center gap-2 font-serif text-lg font-semibold text-cream">
-            {/* TODO: sustituir por logo real */}
-            <span className="inline-block h-2 w-2 rounded-full bg-gold" aria-hidden="true" />
-            Master Collections
-          </Link>
+          <Logo />
           <p className="mt-3 max-w-xs text-sm text-muted">
             Comunidad de compraventa y aprendizaje sobre relojes de segunda mano.
           </p>

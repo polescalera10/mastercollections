@@ -62,24 +62,69 @@ Todos los datos pendientes están marcados con `// TODO` o `[TODO]`. Los princip
 ### Textos legales — `app/legal/page.tsx` y `app/privacidad/page.tsx`
 - Titular, NIF/CIF, domicilio, email de contacto y fechas.
 
+## Páginas
+
+| Ruta | Qué es |
+|------|--------|
+| `/` | Landing principal (una sola misión: Telegram). |
+| `/links` | Hub estilo Linktree: Telegram, Web, YouTube, Instagram, TikTok, ebook. |
+| `/ebook-gratis` | Captura de lead (Nombre + Email) para el ebook gratuito. |
+| `/ebook-gratis/gracias` | Descarga directa del PDF + CTA a Telegram (replica el email de entrega). |
+| `/legal`, `/privacidad` | Textos legales básicos. |
+
+## Captura del ebook (leads + descarga)
+
+El formulario de `/ebook-gratis` hace **descarga directa**: al enviarlo, el usuario va a
+`/ebook-gratis/gracias` y se baja el PDF al instante (servido desde
+`public/ebook-master-collections.pdf`, ya no depende de WordPress).
+
+El email se guarda vía la función serverless [`app/api/lead/route.ts`](app/api/lead/route.ts),
+que es **agnóstica de proveedor**:
+
+- **Sin configurar nada**, el formulario funciona y la descarga también — simplemente no se
+  guarda el contacto todavía.
+- Para **guardar los emails en Brevo** (gratis, contactos ilimitados):
+  1. Crea cuenta en [brevo.com](https://www.brevo.com) y una lista de contactos.
+  2. En Vercel → Project → Settings → Environment Variables, añade:
+     - `BREVO_API_KEY` = tu API key (`xkeysib-…`)
+     - `BREVO_LIST_ID` = el ID numérico de tu lista
+  3. Redeploy. A partir de ahí, cada alta entra en tu lista de Brevo.
+- ¿Prefieres **Google Sheets**? Cambia el bloque de Brevo en `route.ts` por una llamada a un
+  Google Apps Script Web App que haga `append` de fila. (Mismo patrón, otro destino.)
+
+Ver [`.env.example`](.env.example) para las variables.
+
 ## Estructura
 
 ```
 app/
   layout.tsx        # fuentes, metadata SEO, OG/Twitter, JSON-LD, lang=es
-  page.tsx          # ensambla las secciones
+  page.tsx          # landing principal
   globals.css       # tema (Tailwind) + variables de color
   robots.ts         # robots.txt (permite bots de IA)
   sitemap.ts        # sitemap.xml
+  links/            # hub de enlaces (Linktree)
+  ebook-gratis/     # captura del ebook + /gracias (descarga directa)
+  api/lead/         # función serverless de captura de leads (Brevo, agnóstica)
   legal/            # aviso legal
   privacidad/       # política de privacidad
-components/          # una sección por archivo
+components/          # una sección/elemento por archivo (Logo, EbookForm, …)
 lib/
-  site.ts           # enlaces, métricas y config central
+  site.ts           # enlaces, métricas, ebook y config central
   faq.ts            # FAQ (fuente única: acordeón + JSON-LD)
+  testimonials.ts   # capturas de testimonios
 public/
-  llms.txt          # contexto para buscadores de IA
+  ebook-master-collections.pdf   # el ebook (servido desde la propia web)
+  llms.txt                       # contexto para buscadores de IA
+  brand/logo-original.jpg        # logo original de referencia
 ```
+
+## Pendiente de confirmar
+
+- **TikTok**: el handle en `lib/site.ts` (`links.tiktok`) es un candidato sin verificar.
+  Sustitúyelo por la URL real de la cuenta.
+- **Telegram**: el email de entrega del ebook usaba otro enlace (`t.me/+C2kkMbWHo20xODA0`)
+  distinto del principal (`t.me/+ftxLu95f1scyZmZk`). Confirmar cuál es el canónico en `lib/site.ts`.
 
 ## Decisiones de SEO ya aplicadas
 
