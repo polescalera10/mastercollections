@@ -23,11 +23,19 @@ export const ebookTitle = 'No la cagues con tu primer reloj';
  * Sustituye cada `null` por el número real. Mientras sea `null`, la cifra se
  * muestra como un placeholder visible y la métrica puede ocultarse si procede.
  */
-export const metrics = {
+export const metrics: {
+  telegramMembers: number | null;
+  youtubeSubscribers: number | null;
+  operations: number | null;
+  years: number | null;
+} = {
   telegramMembers: 2000,
   youtubeSubscribers: 6500,
-  operations: 5000,
-  years: 10,
+  // TODO (Directiva Omnibus / competencia desleal): "operaciones" y "años" estaban
+  // publicados sin fuente verificada (+5.000 / +10). Retirados de la UI el 2026-07-07.
+  // Verificar con Pol/Toni el dato real antes de reactivar (basta con poner el número).
+  operations: null,
+  years: null,
 };
 
 /**

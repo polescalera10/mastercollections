@@ -1,6 +1,11 @@
 /**
  * Capturas de mensajes reales de miembros de la comunidad.
  *
+ * ⚠️ SECCIÓN DESACTIVADA en app/page.tsx (2026-07-07, auditoría de legalidad).
+ * TODO: verificar con Pol antes de reactivar. Directiva Omnibus / competencia
+ * desleal: solo se pueden publicar testimonios REALES y verificables, con
+ * consentimiento de sus autores. Nada de capturas simuladas o editadas.
+ *
  * Cómo añadir una captura:
  * 1. Guarda la imagen en /public/testimonials/ (p. ej. /public/testimonials/01.jpg)
  * 2. Cambia `src: null` por `src: '/testimonials/01.jpg'` en la entrada correspondiente.
