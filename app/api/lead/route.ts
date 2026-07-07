@@ -17,40 +17,113 @@ import { NextResponse } from 'next/server';
  *        BREVO_LIST_ID = 3          (el ID numérico de tu lista)
  *   4. Redeploy. Listo.
  *
+ * Seguridad aplicada:
+ * - La API key SOLO vive en el servidor (process.env, sin NEXT_PUBLIC).
+ * - Honeypot anti-bots + rate limiting básico por IP en memoria.
+ * - Límite de tamaño del body, validación estricta de tipos y longitudes.
+ * - Los errores internos se registran en el servidor pero NUNCA se devuelven
+ *   al cliente (respuestas genéricas).
+ *
  * Alternativa Google Sheets: ver README.
  */
 
 export const runtime = 'nodejs';
 
 type Body = {
-  nombre?: string;
-  email?: string;
+  nombre?: unknown;
+  email?: unknown;
   /** Honeypot anti-spam: debe llegar vacío. */
-  website?: string;
+  website?: unknown;
 };
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+/** Tamaño máximo del body en bytes (el payload legítimo ocupa <300 B). */
+const MAX_BODY_BYTES = 2_048;
+
+/**
+ * Rate limiting básico en memoria por IP: máx. 5 envíos por ventana de 10 min.
+ * Sin infra nueva: en Vercel cada instancia serverless tiene su propio Map, así
+ * que es un límite "best-effort" (suficiente contra spam simple; para un límite
+ * estricto haría falta un almacén compartido tipo Upstash/KV).
+ */
+const RATE_LIMIT_MAX = 5;
+const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
+const hits = new Map<string, { count: number; windowStart: number }>();
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const entry = hits.get(ip);
+  if (!entry || now - entry.windowStart > RATE_LIMIT_WINDOW_MS) {
+    hits.set(ip, { count: 1, windowStart: now });
+    return false;
+  }
+  entry.count += 1;
+  return entry.count > RATE_LIMIT_MAX;
+}
+
+/** Limpieza perezosa para que el Map no crezca sin límite. */
+function pruneHits() {
+  if (hits.size < 1_000) return;
+  const now = Date.now();
+  for (const [ip, entry] of hits) {
+    if (now - entry.windowStart > RATE_LIMIT_WINDOW_MS) hits.delete(ip);
+  }
+}
+
+function clientIp(request: Request): string {
+  // En Vercel, x-forwarded-for lleva la IP real del cliente en primera posición.
+  const fwd = request.headers.get('x-forwarded-for');
+  return fwd ? fwd.split(',')[0].trim() : 'unknown';
+}
+
+function asTrimmedString(value: unknown, maxLen: number): string | null {
+  if (typeof value !== 'string') return null;
+  const trimmed = value.trim();
+  return trimmed.length <= maxLen ? trimmed : null;
+}
 
 export async function POST(request: Request) {
-  let body: Body;
+  pruneHits();
+  if (isRateLimited(clientIp(request))) {
+    return NextResponse.json(
+      { ok: false, error: 'Demasiados intentos. Prueba de nuevo en unos minutos.' },
+      { status: 429 },
+    );
+  }
+
+  // Límite de tamaño: rechaza bodies anormalmente grandes antes de parsear.
+  let raw: string;
   try {
-    body = await request.json();
+    raw = await request.text();
   } catch {
     return NextResponse.json({ ok: false, error: 'Petición no válida.' }, { status: 400 });
   }
+  if (raw.length > MAX_BODY_BYTES) {
+    return NextResponse.json({ ok: false, error: 'Petición no válida.' }, { status: 413 });
+  }
 
-  const nombre = (body.nombre ?? '').trim();
-  const email = (body.email ?? '').trim().toLowerCase();
+  let body: Body;
+  try {
+    body = JSON.parse(raw);
+  } catch {
+    return NextResponse.json({ ok: false, error: 'Petición no válida.' }, { status: 400 });
+  }
+  if (typeof body !== 'object' || body === null) {
+    return NextResponse.json({ ok: false, error: 'Petición no válida.' }, { status: 400 });
+  }
 
   // Trampa anti-bots: si el honeypot viene relleno, fingimos éxito y descartamos.
-  if (body.website) {
+  if (typeof body.website === 'string' && body.website !== '') {
     return NextResponse.json({ ok: true, stored: false });
   }
 
-  if (!nombre || nombre.length > 80) {
+  const nombre = asTrimmedString(body.nombre, 80);
+  const email = asTrimmedString(body.email, 254)?.toLowerCase() ?? null;
+
+  if (!nombre) {
     return NextResponse.json({ ok: false, error: 'Escribe tu nombre.' }, { status: 422 });
   }
-  if (!EMAIL_RE.test(email)) {
+  if (!email || !EMAIL_RE.test(email)) {
     return NextResponse.json({ ok: false, error: 'Email no válido.' }, { status: 422 });
   }
 
@@ -76,6 +149,8 @@ export async function POST(request: Request) {
         listIds: [Number(listId)],
         updateEnabled: true,
       }),
+      // Si Brevo no responde, no dejamos la función colgada.
+      signal: AbortSignal.timeout(8_000),
     });
 
     // Brevo devuelve 201 (creado) o 204 (actualizado). Un email duplicado no es un error real.
@@ -88,7 +163,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ ok: true, stored: true });
     }
 
-    // El guardado falló, pero no bloqueamos la descarga del usuario.
+    // El guardado falló, pero no bloqueamos la descarga del usuario ni
+    // exponemos el detalle del error al cliente.
     console.error('Brevo error:', res.status, detail);
     return NextResponse.json({ ok: true, stored: false });
   } catch (err) {
