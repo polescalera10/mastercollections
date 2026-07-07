@@ -7,6 +7,12 @@ export const metadata: Metadata = {
   robots: { index: false, follow: true },
 };
 
+/**
+ * Política de privacidad (RGPD + LOPDGDD).
+ * Refleja la realidad actual del sitio: el ÚNICO punto de recogida de datos es el
+ * formulario del ebook (/ebook-gratis), que pide nombre y email con consentimiento.
+ * TODO: completar los datos del responsable (marcados como [TODO]) con Pol/Toni.
+ */
 export default function PrivacidadPage() {
   return (
     <main className="container-page py-28">
@@ -17,35 +23,77 @@ export default function PrivacidadPage() {
         <h1 className="mt-6 font-serif text-4xl font-semibold text-cream">Política de privacidad</h1>
 
         <div className="mt-8 space-y-6 text-cream/75">
+          <h2 className="font-serif text-2xl text-cream">Responsable del tratamiento</h2>
+          <ul className="space-y-1">
+            <li>
+              <strong className="text-cream">Titular:</strong> Master Collections{' '}
+              {/* TODO: nombre y apellidos o razón social del titular */}
+            </li>
+            <li>
+              <strong className="text-cream">NIF/CIF:</strong> [TODO: NIF/CIF]
+            </li>
+            <li>
+              <strong className="text-cream">Domicilio:</strong> [TODO: dirección]
+            </li>
+            <li>
+              <strong className="text-cream">Email de contacto:</strong> [TODO: email de contacto]
+            </li>
+          </ul>
+
+          <h2 className="font-serif text-2xl text-cream">Qué datos recogemos y para qué</h2>
           <p>
-            Master Collections respeta tu privacidad. Esta web es informativa y{' '}
-            <strong className="text-cream">no recoge datos personales mediante formularios</strong>:
-            el único paso que proponemos es unirte a nuestro grupo de Telegram, plataforma que se
-            rige por su propia política de privacidad.
+            El único punto de este sitio donde se recogen datos personales es el formulario de
+            descarga del ebook (<Link href="/ebook-gratis" className="text-gold hover:underline">/ebook-gratis</Link>),
+            donde pedimos tu <strong className="text-cream">nombre</strong> y tu{' '}
+            <strong className="text-cream">email</strong> con estas finalidades:
+          </p>
+          <ul className="list-disc space-y-1 pl-5">
+            <li>Entregarte el ebook que has solicitado.</li>
+            <li>
+              Enviarte comunicaciones sobre la comunidad y contenidos de Master Collections, solo si
+              marcas la casilla de consentimiento.
+            </li>
+          </ul>
+          <p>
+            La base jurídica del tratamiento es tu <strong className="text-cream">consentimiento</strong>{' '}
+            (art. 6.1.a RGPD), que puedes retirar en cualquier momento: todos los emails incluyen un
+            enlace de baja, y también puedes pedirla escribiendo al email de contacto.
           </p>
 
-          <h2 className="font-serif text-2xl text-cream">Datos que tratamos</h2>
+          <h2 className="font-serif text-2xl text-cream">Dónde se guardan tus datos</h2>
           <p>
-            {/* TODO: ajustar según las herramientas reales que se usen. */}
-            No solicitamos nombre, correo ni teléfono en este sitio. Si en el futuro se añade
-            analítica web, se detallará aquí qué datos se recogen y con qué finalidad.
+            Los contactos se gestionan con <strong className="text-cream">Brevo</strong> (plataforma
+            de email marketing) y el sitio se aloja en <strong className="text-cream">Vercel</strong>.
+            Ambos actúan como encargados del tratamiento conforme al art. 28 RGPD. Si alguno de
+            estos proveedores tratara datos fuera del Espacio Económico Europeo, la transferencia se
+            realizará con las garantías previstas en el capítulo V del RGPD.
+          </p>
+          <p>
+            No vendemos ni cedemos tus datos a terceros. No hay más destinatarios que los
+            proveedores citados.
           </p>
 
-          <h2 className="font-serif text-2xl text-cream">Enlaces a terceros</h2>
+          <h2 className="font-serif text-2xl text-cream">Cuánto tiempo los conservamos</h2>
           <p>
-            Esta web enlaza a Telegram, YouTube e Instagram. Al acceder a ellos, tus datos pasan a
-            tratarse según las políticas de privacidad de cada plataforma.
+            Hasta que te des de baja o solicites su supresión. Si retiras el consentimiento,
+            dejaremos de enviarte comunicaciones y eliminaremos tus datos de la lista.
           </p>
 
           <h2 className="font-serif text-2xl text-cream">Tus derechos</h2>
           <p>
-            Puedes ejercer tus derechos de acceso, rectificación y supresión escribiendo a{' '}
-            {/* TODO: email de contacto */}[TODO: email de contacto].
+            Puedes ejercer tus derechos de acceso, rectificación, supresión, oposición, limitación
+            del tratamiento y portabilidad escribiendo a {/* TODO: email de contacto */}[TODO: email
+            de contacto]. Si consideras que no hemos tratado tus datos correctamente, puedes
+            reclamar ante la Agencia Española de Protección de Datos (aepd.es).
           </p>
 
-          <p className="text-sm text-muted">
-            Última actualización: {/* TODO: fecha */}[TODO]
+          <h2 className="font-serif text-2xl text-cream">Enlaces a terceros</h2>
+          <p>
+            Esta web enlaza a Telegram, YouTube, Instagram y TikTok. Al acceder a esas plataformas,
+            tus datos pasan a tratarse según las políticas de privacidad de cada una.
           </p>
+
+          <p className="text-sm text-muted">Última actualización: 7 de julio de 2026</p>
         </div>
       </article>
     </main>

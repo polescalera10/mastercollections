@@ -59,9 +59,7 @@ export default function LegalPage() {
             se permite su reproducción sin autorización.
           </p>
 
-          <p className="text-sm text-muted">
-            Última actualización: {/* TODO: fecha */}[TODO]
-          </p>
+          <p className="text-sm text-muted">Última actualización: 7 de julio de 2026</p>
         </div>
       </article>
     </main>

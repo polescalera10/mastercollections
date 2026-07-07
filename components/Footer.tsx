@@ -51,6 +51,11 @@ export function Footer() {
                 Privacidad
               </Link>
             </li>
+            <li>
+              <Link href="/cookies" className="transition-colors duration-200 hover:text-cream">
+                Cookies
+              </Link>
+            </li>
           </ul>
         </nav>
       </div>
