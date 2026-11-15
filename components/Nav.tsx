@@ -46,10 +46,11 @@ export function Nav() {
               href={links.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-xl bg-action px-3.5 py-2 font-display text-xs font-bold text-ink shadow-md shadow-action/20 transition-transform active:scale-95 sm:px-4 sm:py-2.5 sm:text-sm"
+              aria-label="Entrar al canal de WhatsApp"
+              className="inline-flex h-9 w-9 items-center justify-center gap-1.5 rounded-xl bg-action font-display text-xs font-bold text-ink shadow-md shadow-action/20 transition-transform active:scale-95 min-[430px]:h-auto min-[430px]:w-auto min-[430px]:px-3.5 min-[430px]:py-2 sm:px-4 sm:py-2.5 sm:text-sm"
             >
               <WhatsAppIcon className="h-4 w-4 shrink-0" />
-              <span>WhatsApp</span>
+              <span className="hidden min-[430px]:inline">WhatsApp</span>
             </a>
 
             <button

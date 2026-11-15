@@ -55,28 +55,28 @@ const rows: LinkRow[] = [
   },
   {
     href: links.youtube,
-    label: 'YouTube (@MasterCollectionsClub)',
+    label: 'YouTube',
     hint:
       metrics.youtubeSubscribers !== null
-        ? `+${metricLabel(metrics.youtubeSubscribers)} suscriptores · Análisis y mercado`
-        : 'Análisis y mercado',
+        ? `@MasterCollectionsClub · +${metricLabel(metrics.youtubeSubscribers)} suscriptores`
+        : '@MasterCollectionsClub · Análisis y mercado',
     Icon: YouTubeIcon,
     external: true,
   },
   {
     href: links.tiktok,
-    label: 'TikTok (@toniiabella)',
+    label: 'TikTok',
     hint:
       metrics.tiktokFollowers !== null
-        ? `+${metricLabel(metrics.tiktokFollowers)} seguidores · Relojería en vídeo corto`
-        : 'Relojería en vídeo corto',
+        ? `@toniiabella · +${metricLabel(metrics.tiktokFollowers)} seguidores`
+        : '@toniiabella · Relojería en vídeo corto',
     Icon: TikTokIcon,
     external: true,
   },
   {
     href: links.instagram,
-    label: 'Instagram (@mastercollections_)',
-    hint: 'El día a día y piezas en muñeca',
+    label: 'Instagram',
+    hint: '@mastercollections_ · El día a día y piezas en muñeca',
     Icon: InstagramIcon,
     external: true,
   },
@@ -125,10 +125,10 @@ export default function LinksPage() {
                   <row.Icon className="h-5 w-5" />
                 </span>
                 <span className="min-w-0 flex-1">
-                  <span className="block truncate font-display text-sm font-bold text-cream">
+                  <span className="block font-display text-sm font-bold leading-snug text-cream">
                     {row.label}
                   </span>
-                  <span className="block truncate text-xs text-muted">{row.hint}</span>
+                  <span className="mt-0.5 block text-xs leading-snug text-muted">{row.hint}</span>
                 </span>
                 <ArrowRightIcon className="h-4 w-4 shrink-0 text-muted transition-colors duration-200 group-hover:text-gold" />
               </a>

@@ -385,8 +385,8 @@ export default function AdminPage() {
   return (
     <div className="min-h-screen bg-ink pb-24">
       {/* Barra superior de administración */}
-      <header className="sticky top-0 z-30 border-b border-cream/10 bg-ink/90 backdrop-blur-md">
-        <div className="container-page flex flex-wrap items-center justify-between gap-4 py-4">
+      <header className="z-30 border-b border-cream/10 bg-ink/90 backdrop-blur-md sm:sticky sm:top-0">
+        <div className="container-page flex flex-wrap items-center justify-between gap-x-4 gap-y-3 py-3 sm:py-4">
           <div className="flex items-center gap-4">
             <Logo />
             <span className="rounded-full border border-gold/40 bg-gold/10 px-3 py-1 text-xs font-semibold text-gold">

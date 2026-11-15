@@ -10,7 +10,7 @@ export function DemoBanner() {
   return (
     <div
       role="note"
-      className="pointer-events-none fixed bottom-3 left-3 z-[60] max-w-[calc(100vw-1.5rem)] rounded-full border border-gold/40 bg-ink/90 px-3.5 py-1.5 font-mono text-[10px] font-bold uppercase tracking-wider text-gold shadow-lg backdrop-blur-md sm:text-[11px]"
+      className="pointer-events-none fixed inset-x-0 bottom-0 z-[60] bg-ink/90 py-1 text-center font-mono text-[10px] font-bold uppercase tracking-wider text-gold backdrop-blur-sm"
     >
       Demo · datos ficticios
     </div>

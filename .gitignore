@@ -38,3 +38,4 @@ next-env.d.ts
 # artefactos locales de pruebas / datos antiguos del catálogo en JSON
 /data
 /public/uploads
+AGENTS.md
