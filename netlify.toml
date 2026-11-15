@@ -1,0 +1,13 @@
+[build]
+  command = "npm run build"
+
+# Despliegue de DEMO (datos ficticios). Estas variables se inyectan en el build.
+[context.production.environment]
+  NEXT_PUBLIC_DEMO_MODE = "true"
+  NEXT_PUBLIC_SITE_URL = "https://mastercollections-demo.netlify.app"
+
+[context.deploy-preview.environment]
+  NEXT_PUBLIC_DEMO_MODE = "true"
+
+[context.branch-deploy.environment]
+  NEXT_PUBLIC_DEMO_MODE = "true"

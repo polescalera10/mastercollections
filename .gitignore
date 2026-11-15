@@ -30,3 +30,11 @@ next-env.d.ts
 
 # vercel
 .vercel
+
+# Local Netlify folder
+.netlify
+
+
+# artefactos locales de pruebas / datos antiguos del catálogo en JSON
+/data
+/public/uploads
