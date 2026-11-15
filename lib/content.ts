@@ -3,7 +3,6 @@ import type {
   EbookChapter,
   EbookPainPoint,
   ProfileItem,
-  VideoItem,
 } from './types';
 
 /**
@@ -56,24 +55,6 @@ export const communityPillars: CommunityPillar[] = [
     iconName: 'sparkles',
     title: 'Quedadas y comunidad',
     desc: 'Contenido en redes, preguntas abiertas y encuentros presenciales para hablar de relojes sin postureo.',
-  },
-];
-
-export const featuredVideos: VideoItem[] = [
-  {
-    id: null,
-    title: 'La verdad sobre comprar y vender relojes en 2026 (Sin humo)',
-    tag: 'YouTube · Real Talk',
-  },
-  {
-    id: null,
-    title: 'Cómo cazar un reloj "Frankenstein" antes de soltar tu dinero',
-    tag: 'Guía de calle',
-  },
-  {
-    id: null,
-    title: 'Chrono24 vs Wallapop vs Grupos Privados: dónde está el margen',
-    tag: 'Watch Trading',
   },
 ];
 

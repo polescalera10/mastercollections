@@ -1,47 +1,34 @@
 import Image from 'next/image';
-import { featuredVideos } from '@/lib/content';
+import { getLatestVideos } from '@/lib/youtube';
 import { links } from '@/lib/site';
 import { Reveal } from './Reveal';
 import { ArrowRightIcon, PlayIcon, YouTubeIcon, TikTokIcon } from './Icons';
 import { WhatsAppButton } from './WhatsAppButton';
 
-const fallbackThumbs = [
-  '/images/street-trader.jpg',
-  '/images/hero-watch.jpg',
-  '/images/street-trader.jpg',
-];
-
-function thumbnail(id: string | null, index: number) {
-  return id ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg` : fallbackThumbs[index % fallbackThumbs.length];
-}
-
-function videoUrl(id: string | null) {
-  return id ? `https://youtu.be/${id}` : links.youtube;
-}
-
 type Card = { title: string; tag?: string; href: string; thumb: string; isVideo: boolean };
 
-/**
- * Mientras no haya IDs reales de vídeo (MC-4), no se inventan títulos de vídeos que
- * no existen: se muestran tarjetas que llevan a cada canal.
- */
-const realVideos = featuredVideos.filter((v) => v.id);
-const cards: Card[] =
-  realVideos.length > 0
-    ? realVideos.map((v, i) => ({
-        title: v.title,
-        tag: v.tag,
-        href: videoUrl(v.id),
-        thumb: thumbnail(v.id, i),
-        isVideo: true,
-      }))
-    : [
-        { title: 'Análisis del mercado en YouTube', tag: 'YouTube', href: links.youtube, thumb: '/images/hero-watch.jpg', isVideo: false },
-        { title: 'Relojería en vídeo corto en TikTok', tag: 'TikTok', href: links.tiktok, thumb: '/images/street-trader.jpg', isVideo: false },
-        { title: 'El día a día y piezas en muñeca en Instagram', tag: 'Instagram', href: links.instagram, thumb: '/images/hero-watch.jpg', isVideo: false },
-      ];
+const dateFormat = new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'short', year: 'numeric' });
 
-export function Content() {
+/** Tarjetas a cada canal, para cuando el feed de YouTube no responde. */
+const channelCards: Card[] = [
+  { title: 'Análisis del mercado en YouTube', tag: 'YouTube', href: links.youtube, thumb: '/images/hero-watch.jpg', isVideo: false },
+  { title: 'Relojería en vídeo corto en TikTok', tag: 'TikTok', href: links.tiktok, thumb: '/images/street-trader.jpg', isVideo: false },
+  { title: 'El día a día y piezas en muñeca en Instagram', tag: 'Instagram', href: links.instagram, thumb: '/images/hero-watch.jpg', isVideo: false },
+];
+
+export async function Content() {
+  const latest = await getLatestVideos(3);
+  const cards: Card[] =
+    latest.length > 0
+      ? latest.map((v) => ({
+          title: v.title,
+          tag: dateFormat.format(new Date(v.published)),
+          href: `https://www.youtube.com/watch?v=${v.id}`,
+          thumb: `https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`,
+          isVideo: true,
+        }))
+      : channelCards;
+
   return (
     <section id="contenido" className="container-page py-14 sm:py-24 scroll-mt-20">
       <Reveal>
@@ -92,7 +79,7 @@ export function Content() {
                   )}
                 </div>
                 <div className="flex flex-1 items-center justify-between gap-3 p-4 sm:p-5">
-                  <h3 className="font-display text-sm font-bold leading-snug text-cream sm:text-base">
+                  <h3 className="line-clamp-2 font-display text-sm font-bold leading-snug text-cream sm:text-base">
                     {video.title}
                   </h3>
                   <ArrowRightIcon className="h-4 w-4 shrink-0 text-muted transition-colors duration-200 group-hover:text-gold sm:h-5 sm:w-5" />
