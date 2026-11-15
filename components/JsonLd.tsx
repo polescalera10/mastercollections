@@ -3,18 +3,19 @@ import { faqItems } from '@/lib/faq';
 
 /**
  * Structured data (JSON-LD) para SEO y citación por buscadores de IA.
- * - Organization: identidad de marca + perfiles (sameAs).
- * - FAQPage: extrae las Q&A de la sección FAQ.
+ * - Organization + WebSite: se monta en el layout global.
+ * - FAQPage: se monta únicamente en la Home (donde están visibles las preguntas),
+ *   cumpliendo las directrices de datos estructurados de Google.
  */
-export function JsonLd() {
+export function JsonLd({ includeFaq = false }: { includeFaq?: boolean }) {
   const organization = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: site.name,
     url: siteUrl,
-    logo: `${siteUrl}/logo.png`, // TODO: subir logo real a /public/logo.png
+    logo: `${siteUrl}/brand/logo-square.jpg`,
     description: site.description,
-    sameAs: [links.telegram, links.youtube, links.instagram],
+    sameAs: [links.telegram, links.youtube, links.instagram, links.tiktok],
   };
 
   const faqPage = {
@@ -36,10 +37,12 @@ export function JsonLd() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(organization) }}
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPage) }}
-      />
+      {includeFaq && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPage) }}
+        />
+      )}
     </>
   );
 }

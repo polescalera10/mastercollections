@@ -1,42 +1,31 @@
+import { profiles } from '@/lib/content';
 import { Reveal } from './Reveal';
-
-type Profile = {
-  title: string;
-  desc: string;
-};
-
-const profiles: Profile[] = [
-  {
-    title: 'El coleccionista',
-    desc: 'Encuentra piezas, contrasta precios y vende a gente que valora lo que tiene entre manos.',
-  },
-  {
-    title: 'El que invierte',
-    desc: 'Aprende a leer el mercado de segunda mano y a comprar relojes que aguantan su valor.',
-  },
-  {
-    title: 'El que empieza',
-    desc: 'Da tus primeros pasos sin miedo: pregunta lo básico y compra tu primer reloj sin meter la pata.',
-  },
-];
 
 export function ForWhom() {
   return (
-    <section className="container-page py-20 sm:py-28">
+    <section className="container-page py-14 sm:py-24">
       <Reveal>
-        <span className="eyebrow">Para quién es</span>
-        <h2 className="mt-4 max-w-2xl font-serif text-3xl font-semibold leading-tight tracking-tight text-cream sm:text-4xl">
-          Si te gustan los relojes, este es tu sitio.
+        <span className="eyebrow">PARA QUIÉN ES ESTO</span>
+        <h2 className="mt-3 max-w-2xl font-display text-2xl font-bold leading-tight tracking-tight text-cream sm:mt-4 sm:text-4xl">
+          La relojería tradicional te mira por encima del hombro. Nosotros te abrimos la puerta.
         </h2>
       </Reveal>
 
-      <div className="mt-12 grid gap-5 md:grid-cols-3">
+      <div className="mt-8 grid grid-cols-1 gap-4 sm:mt-12 md:grid-cols-3 sm:gap-5">
         {profiles.map((p, i) => (
-          <Reveal as="div" key={p.title} delay={i * 0.08}>
-            <article className="group h-full rounded-2xl border border-cream/10 bg-graphite/40 p-7 transition-colors duration-200 hover:border-gold/40">
-              <span className="font-serif text-sm text-gold">0{i + 1}</span>
-              <h3 className="mt-3 font-serif text-xl font-semibold text-cream">{p.title}</h3>
-              <p className="mt-3 text-cream/70">{p.desc}</p>
+          <Reveal as="div" key={p.title} delay={i * 0.06}>
+            <article className="group flex h-full flex-col justify-between rounded-2xl border border-cream/10 bg-graphite p-5 transition-colors duration-200 hover:border-gold/50 sm:p-7">
+              <div>
+                <span className="inline-block rounded-md border border-gold/30 bg-gold/10 px-2 py-0.5 font-mono text-xs font-bold text-gold">
+                  0{i + 1}
+                </span>
+                <h3 className="mt-4 font-display text-lg font-bold text-cream sm:text-xl">
+                  {p.title}
+                </h3>
+                <p className="mt-2.5 text-sm leading-relaxed text-muted sm:text-base">
+                  {p.desc}
+                </p>
+              </div>
             </article>
           </Reveal>
         ))}

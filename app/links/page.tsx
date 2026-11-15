@@ -1,19 +1,22 @@
 import type { Metadata } from 'next';
 import { links } from '@/lib/site';
 import { Logo } from '@/components/Logo';
-import { TelegramButton } from '@/components/TelegramButton';
+import { WhatsAppButton } from '@/components/WhatsAppButton';
 import {
+  TelegramIcon,
   YouTubeIcon,
   InstagramIcon,
   TikTokIcon,
   BookIcon,
+  WatchIcon,
   ArrowRightIcon,
 } from '@/components/Icons';
 import type { ComponentType, SVGProps } from 'react';
 
 export const metadata: Metadata = {
-  title: 'Enlaces | Master Collections',
-  description: 'Todos los enlaces de Master Collections en un solo sitio: Telegram, YouTube, Instagram, TikTok y el ebook gratuito.',
+  title: 'Enlaces Oficiales | Master Collections',
+  description:
+    'Todos los enlaces oficiales de Master Collections: Canal de WhatsApp, Telegram, Drops de Relojes, YouTube, TikTok, Instagram y el ebook gratuito.',
   alternates: { canonical: '/links' },
 };
 
@@ -26,68 +29,106 @@ type LinkRow = {
 };
 
 const rows: LinkRow[] = [
-  { href: '/', label: 'Web', hint: 'La comunidad al completo', Icon: ArrowRightIcon, external: false },
-  { href: links.youtube, label: 'YouTube', hint: 'Análisis y vídeo', Icon: YouTubeIcon, external: true },
-  { href: links.instagram, label: 'Instagram', hint: 'El día a día', Icon: InstagramIcon, external: true },
-  // TODO: confirmar handle real de TikTok en lib/site.ts
-  { href: links.tiktok, label: 'TikTok', hint: 'Relojes en corto', Icon: TikTokIcon, external: true },
-  { href: '/ebook-gratis', label: 'Ebook gratis', hint: 'No la cagues con tu primer reloj', Icon: BookIcon, external: false },
+  {
+    href: links.telegram,
+    label: 'Comunidad en Telegram',
+    hint: '+2.000 miembros hablando de relojes a diario',
+    Icon: TelegramIcon,
+    external: true,
+  },
+  {
+    href: '/ebook-gratis',
+    label: 'Ebook Gratis (70 págs)',
+    hint: '«No la cagues con tu primer reloj» — Descarga directa',
+    Icon: BookIcon,
+    external: false,
+  },
+  {
+    href: '/relojes',
+    label: 'Drops / Relojes disponibles',
+    hint: 'Catálogo de relojes en venta',
+    Icon: WatchIcon,
+    external: false,
+  },
+  {
+    href: links.youtube,
+    label: 'YouTube (@MasterCollectionsClub)',
+    hint: '+6.500 suscriptores · Análisis y mercado sin filtros',
+    Icon: YouTubeIcon,
+    external: true,
+  },
+  {
+    href: links.tiktok,
+    label: 'TikTok (@toniiabella)',
+    hint: '+6.400 seguidores · Relojería callejera en corto',
+    Icon: TikTokIcon,
+    external: true,
+  },
+  {
+    href: links.instagram,
+    label: 'Instagram (@mastercollections_)',
+    hint: 'El día a día, eventos y piezas en muñeca',
+    Icon: InstagramIcon,
+    external: true,
+  },
 ];
 
 export default function LinksPage() {
   return (
-    <main className="relative isolate flex min-h-screen flex-col items-center justify-center overflow-hidden px-5 py-16">
-      {/* Fondo */}
+    <main className="relative isolate flex min-h-screen flex-col items-center justify-center overflow-hidden bg-grid-pattern px-4 py-12 sm:px-6">
       <div
         aria-hidden="true"
-        className="absolute inset-0 -z-10 bg-ink"
+        className="pointer-events-none absolute inset-0 -z-10"
         style={{
           backgroundImage:
-            'radial-gradient(80% 60% at 50% 0%, rgba(200,162,76,0.14) 0%, rgba(11,10,9,0) 60%), radial-gradient(70% 50% at 50% 100%, rgba(42,171,238,0.10) 0%, rgba(11,10,9,0) 60%)',
+            'radial-gradient(80% 55% at 50% 0%, rgba(37,211,102,0.16) 0%, rgba(212,255,0,0.06) 45%, rgba(7,8,10,0) 75%)',
         }}
       />
 
       <div className="w-full max-w-md">
-        {/* Cabecera */}
         <div className="flex flex-col items-center text-center">
           <Logo showWordmark={false} size="md" />
-          <h1 className="mt-5 font-serif text-2xl font-semibold tracking-tight text-cream">
+          <span className="mt-3 font-mono text-[11px] font-bold uppercase tracking-widest text-gold">
+            @MASTERCOLLECTIONS_
+          </span>
+          <h1 className="mt-1 font-display text-2xl font-bold tracking-tight text-cream">
             Master Collections
           </h1>
-          <p className="mt-2 text-sm text-muted">
-            Compra, vende y aprende de relojes sin que te la cuelen.
+          <p className="mt-1.5 text-sm text-muted">
+            Relojería sin corbata y sin humo. Compra, vende y aprende.
           </p>
         </div>
 
-        {/* CTA primario */}
-        <div className="mt-8">
-          <TelegramButton label="Únete gratis ahora" className="w-full" />
+        {/* CTA #1: Canal oficial de WhatsApp */}
+        <div className="mt-6">
+          <WhatsAppButton label="Entrar al grupo de WhatsApp" className="w-full" />
         </div>
 
-        {/* Resto de enlaces */}
-        <ul className="mt-4 space-y-3">
+        <ul className="mt-3.5 space-y-2.5">
           {rows.map((row) => (
             <li key={row.label}>
               <a
                 href={row.href}
                 {...(row.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                className="group flex items-center gap-4 rounded-full border border-cream/15 bg-graphite/50 px-5 py-4 transition-colors duration-200 hover:border-gold/50 hover:bg-graphite"
+                className="group flex items-center gap-3.5 rounded-2xl border border-cream/12 bg-graphite/90 px-4 py-3.5 transition-all duration-200 hover:border-gold/50 hover:bg-stone"
               >
-                <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gold/10 text-gold">
+                <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-gold/30 bg-gold/10 text-gold">
                   <row.Icon className="h-5 w-5" />
                 </span>
-                <span className="flex-1">
-                  <span className="block font-medium text-cream">{row.label}</span>
-                  <span className="block text-xs text-muted">{row.hint}</span>
+                <span className="min-w-0 flex-1">
+                  <span className="block truncate font-display text-sm font-bold text-cream">
+                    {row.label}
+                  </span>
+                  <span className="block truncate text-xs text-muted">{row.hint}</span>
                 </span>
-                <ArrowRightIcon className="h-4 w-4 text-muted transition-colors duration-200 group-hover:text-gold" />
+                <ArrowRightIcon className="h-4 w-4 shrink-0 text-muted transition-colors duration-200 group-hover:text-gold" />
               </a>
             </li>
           ))}
         </ul>
 
-        <p className="mt-10 text-center text-xs text-muted">
-          © {new Date().getFullYear()} Master Collections
+        <p className="mt-8 text-center font-mono text-[11px] text-muted">
+          © {new Date().getFullYear()} MASTER COLLECTIONS
         </p>
       </div>
     </main>

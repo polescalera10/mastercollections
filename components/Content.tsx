@@ -1,83 +1,77 @@
-import { Reveal } from './Reveal';
-import { PlayIcon, YouTubeIcon, ArrowRightIcon } from './Icons';
-import { TelegramButton } from './TelegramButton';
+import Image from 'next/image';
+import { featuredVideos } from '@/lib/content';
 import { links } from '@/lib/site';
+import { Reveal } from './Reveal';
+import { ArrowRightIcon, PlayIcon, YouTubeIcon, TikTokIcon } from './Icons';
+import { WhatsAppButton } from './WhatsAppButton';
 
-type Video = {
-  /** ID de YouTube. Cuando exista, la miniatura y el enlace se generan solos. */
-  id: string | null;
-  title: string;
-};
-
-// TODO: sustituir por 3 vídeos REALES del canal (rellenar `id` con el ID de YouTube
-// y `title` con el título real). Ej: { id: 'dQw4w9WgXcQ', title: 'Análisis del...' }
-const videos: Video[] = [
-  { id: null, title: 'Análisis de un reloj real, sin filtros' },
-  { id: null, title: 'Cómo detectar una falsificación' },
-  { id: null, title: 'Comprar en Chrono24 vs Wallapop' },
+const fallbackThumbs = [
+  '/images/street-trader.jpg',
+  '/images/hero-watch.jpg',
+  '/images/street-trader.jpg',
 ];
 
-function thumbnail(id: string | null) {
-  return id ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg` : null;
+function thumbnail(id: string | null, index: number) {
+  return id ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg` : fallbackThumbs[index % fallbackThumbs.length];
 }
+
 function videoUrl(id: string | null) {
   return id ? `https://youtu.be/${id}` : links.youtube;
 }
 
 export function Content() {
   return (
-    <section className="container-page py-20 sm:py-28">
+    <section id="contenido" className="container-page py-14 sm:py-24 scroll-mt-20">
       <Reveal>
-        <span className="eyebrow">El contenido</span>
-        <h2 className="mt-4 max-w-3xl font-serif text-3xl font-semibold leading-tight tracking-tight text-cream sm:text-4xl">
-          Esto es lo que compartimos. El grupo es donde pasa lo bueno.
+        <span className="eyebrow">CONTENIDO SIN FILTROS</span>
+        <h2 className="mt-3 max-w-3xl font-display text-2xl font-bold leading-tight tracking-tight text-cream sm:mt-4 sm:text-4xl">
+          En redes enseñamos la calle. En el WhatsApp salen las oportunidades.
         </h2>
-        <p className="mt-4 max-w-xl text-cream/70">
-          En YouTube enseñamos la cara pública: análisis y criterio. En Telegram ocurre el
-          día a día — las oportunidades y las conversaciones que no caben en un vídeo.
+        <p className="mt-2 max-w-xl text-sm text-muted sm:mt-3 sm:text-base">
+          En YouTube y TikTok destripamos el mercado sin pelos en la lengua. En el canal de
+          WhatsApp y Telegram ocurre la acción en tiempo real.
         </p>
       </Reveal>
 
-      <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {videos.map((video, i) => {
-          const thumb = thumbnail(video.id);
+      <div className="mt-8 grid grid-cols-1 gap-4 sm:mt-12 sm:grid-cols-2 lg:grid-cols-3 sm:gap-5">
+        {featuredVideos.map((video, i) => {
+          const thumb = thumbnail(video.id, i);
           return (
-            <Reveal as="div" key={i} delay={i * 0.08}>
+            <Reveal as="div" key={video.title} delay={i * 0.06}>
               <a
                 href={videoUrl(video.id)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group block overflow-hidden rounded-2xl border border-cream/10 bg-graphite/40 transition-colors duration-200 hover:border-gold/40"
+                className="group flex h-full flex-col overflow-hidden rounded-2xl border border-cream/10 bg-graphite transition-colors duration-200 hover:border-gold/50"
               >
-                <div className="relative aspect-video overflow-hidden">
-                  {thumb ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={thumb}
-                      alt={`Miniatura del vídeo: ${video.title}`}
-                      loading="lazy"
-                      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
-                    />
-                  ) : (
-                    // Placeholder hasta tener el vídeo real
-                    <div
-                      aria-hidden="true"
-                      className="h-full w-full bg-ink"
-                      style={{
-                        backgroundImage:
-                          'radial-gradient(80% 80% at 50% 30%, rgba(200,162,76,0.16) 0%, rgba(11,10,9,0) 70%)',
-                      }}
-                    />
+                <div className="relative aspect-video overflow-hidden bg-ink">
+                  <Image
+                    src={thumb}
+                    alt={video.title}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/25 to-transparent"
+                  />
+                  {video.tag && (
+                    <span className="absolute left-3 top-3 rounded-lg border border-gold/40 bg-ink/85 px-2.5 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider text-gold backdrop-blur-sm">
+                      {video.tag}
+                    </span>
                   )}
                   <span className="absolute inset-0 flex items-center justify-center">
-                    <span className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-ink/70 text-cream backdrop-blur-sm transition-colors duration-200 group-hover:bg-action group-hover:text-white">
-                      <PlayIcon className="ml-0.5 h-6 w-6" />
+                    <span className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-cream/20 bg-ink/80 text-cream backdrop-blur-sm transition-all duration-200 group-hover:scale-110 group-hover:border-gold group-hover:bg-gold group-hover:text-ink sm:h-14 sm:w-14">
+                      <PlayIcon className="ml-0.5 h-5 w-5 sm:h-6 sm:w-6" />
                     </span>
                   </span>
                 </div>
-                <div className="flex items-center justify-between gap-3 p-5">
-                  <h3 className="font-serif text-base font-medium text-cream">{video.title}</h3>
-                  <ArrowRightIcon className="h-5 w-5 shrink-0 text-muted transition-colors duration-200 group-hover:text-gold" />
+                <div className="flex flex-1 items-center justify-between gap-3 p-4 sm:p-5">
+                  <h3 className="font-display text-sm font-bold leading-snug text-cream sm:text-base">
+                    {video.title}
+                  </h3>
+                  <ArrowRightIcon className="h-4 w-4 shrink-0 text-muted transition-colors duration-200 group-hover:text-gold sm:h-5 sm:w-5" />
                 </div>
               </a>
             </Reveal>
@@ -86,11 +80,25 @@ export function Content() {
       </div>
 
       <Reveal>
-        <div className="mt-12 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
-          <TelegramButton />
-          <a href={links.youtube} target="_blank" rel="noopener noreferrer" className="btn-ghost">
-            <YouTubeIcon className="h-4 w-4" />
-            Ver el canal de YouTube
+        <div className="mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:flex-wrap sm:items-center">
+          <WhatsAppButton className="w-full sm:w-auto" />
+          <a
+            href={links.youtube}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-ghost w-full sm:w-auto"
+          >
+            <YouTubeIcon className="h-4 w-4 text-red-500" />
+            <span>YouTube (@MasterCollectionsClub)</span>
+          </a>
+          <a
+            href={links.tiktok}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-ghost w-full sm:w-auto"
+          >
+            <TikTokIcon className="h-4 w-4 text-gold" />
+            <span>TikTok (@toniiabella)</span>
           </a>
         </div>
       </Reveal>

@@ -1,26 +1,30 @@
 import { links } from '@/lib/site';
 import { TelegramIcon } from './Icons';
 
-type Props = {
-  /** Texto del botón. Por defecto, el CTA principal. */
+type TelegramButtonProps = {
   label?: string;
+  variant?: 'ghost' | 'primary';
   className?: string;
 };
 
 /**
- * CTA primario único de la web: unirse al Telegram gratuito.
- * Abre en pestaña nueva y conserva el color de acción en toda la página.
+ * CTA de Telegram (ahora como canal secundario / complementario a WhatsApp).
  */
-export function TelegramButton({ label = 'Únete gratis al Telegram', className = '' }: Props) {
+export function TelegramButton({
+  label = 'Unirme a Telegram',
+  variant = 'ghost',
+  className = '',
+}: TelegramButtonProps) {
+  const baseClass = variant === 'primary' ? 'btn-primary' : 'btn-ghost';
   return (
     <a
       href={links.telegram}
       target="_blank"
       rel="noopener noreferrer"
-      className={`btn-primary ${className}`}
+      className={`${baseClass} ${className}`}
     >
-      <TelegramIcon className="h-5 w-5" />
-      {label}
+      <TelegramIcon className="h-4 w-4 shrink-0 text-telegram" />
+      <span>{label}</span>
     </a>
   );
 }

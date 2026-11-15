@@ -2,15 +2,11 @@
 
 import { useEffect, useState } from 'react';
 import { Logo } from '@/components/Logo';
+import { WhatsAppButton } from '@/components/WhatsAppButton';
 import { TelegramButton } from '@/components/TelegramButton';
 import { ArrowRightIcon } from '@/components/Icons';
 import { ebookPdf, ebookTitle } from '@/lib/site';
 
-/**
- * Página de gracias: replica el email de entrega del ebook, pero con DESCARGA
- * DIRECTA (el usuario no depende de que le llegue el correo). El PDF se sirve
- * desde nuestra propia web (/ebook-master-collections.pdf).
- */
 export default function GraciasPage() {
   const [nombre, setNombre] = useState('');
 
@@ -23,13 +19,13 @@ export default function GraciasPage() {
   }, []);
 
   return (
-    <main className="relative isolate flex min-h-screen flex-col px-5 py-6">
+    <main className="relative isolate flex min-h-screen flex-col bg-grid-pattern px-4 py-6 sm:px-6">
       <div
         aria-hidden="true"
-        className="absolute inset-0 -z-10 bg-ink"
+        className="pointer-events-none absolute inset-0 -z-10"
         style={{
           backgroundImage:
-            'radial-gradient(70% 50% at 50% 0%, rgba(200,162,76,0.14) 0%, rgba(11,10,9,0) 55%)',
+            'radial-gradient(70% 50% at 50% 0%, rgba(37,211,102,0.15) 0%, rgba(7,8,10,0) 60%)',
         }}
       />
 
@@ -37,56 +33,47 @@ export default function GraciasPage() {
         <Logo />
       </header>
 
-      <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col justify-center py-12">
-        <span className="eyebrow">Ya está</span>
-        <h1 className="mt-4 font-serif text-4xl font-semibold leading-tight tracking-tight text-cream sm:text-5xl">
-          ¡Ya lo tienes{nombre ? `, ${nombre}` : ''}!
+      <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col justify-center py-10 sm:py-12">
+        <span className="eyebrow">DESCARGA DESBLOQUEADA</span>
+        <h1 className="mt-3 font-display text-3xl font-bold leading-tight tracking-tight text-cream sm:mt-4 sm:text-5xl">
+          ¡Ya lo tienes dentro{nombre ? `, ${nombre}` : ''}!
         </h1>
-        <p className="mt-4 text-lg text-cream/75">
-          Gracias por descargarte el ebook «{ebookTitle}». Aquí tienes el enlace directo para
-          bajártelo:
+        <p className="mt-3 text-base text-muted sm:text-lg">
+          Aquí tienes tu copia directa de «{ebookTitle}» (PDF de 70 páginas):
         </p>
 
-        {/* Descarga directa */}
-        <div className="mt-7">
-          <a
-            href={ebookPdf}
-            download
-            className="btn-primary"
-          >
-            Descargar ebook (PDF)
+        <div className="mt-6">
+          <a href={ebookPdf} download className="btn-primary w-full sm:w-auto">
+            <span>Descargar ebook ahora (PDF)</span>
             <ArrowRightIcon className="h-5 w-5" />
           </a>
         </div>
 
-        <div className="mt-10 space-y-3 border-l-2 border-gold/40 pl-5 text-cream/75">
-          <p>Este libro es corto, directo y al grano. Nada de humo ni paja. Aquí hablamos de:</p>
-          <ul className="space-y-1.5 text-cream/70">
-            <li>— Cómo comprar sin que te timen</li>
-            <li>— Dónde encontrar relojes con margen</li>
-            <li>— Qué marcas sí (y cuáles mejor ni tocar)</li>
-            <li>— Y cómo empezar a moverte como un coleccionista de verdad</li>
-          </ul>
-        </div>
-
-        {/* ¿Y ahora qué? → Telegram */}
-        <div className="mt-10 rounded-2xl border border-cream/10 bg-graphite/50 p-6 sm:p-8">
-          <h2 className="font-serif text-2xl font-semibold text-cream">¿Y ahora qué?</h2>
-          <p className="mt-2 text-cream/75">
-            Únete al canal de Telegram si aún no lo has hecho. Ahí es donde salen los chollos
-            buenos, los relojes que sí se venden, y donde aprendemos todos, cada semana.
+        {/* Siguiente paso: Canal de WhatsApp */}
+        <div className="mt-8 rounded-2xl border border-gold/30 bg-graphite p-5 sm:mt-10 sm:p-8">
+          <span className="font-mono text-xs font-bold uppercase tracking-wider text-gold">
+            PASO 2 · OBLIGATORIO SI TE GUSTAN LOS RELOJES
+          </span>
+          <h2 className="mt-2 font-display text-xl font-bold text-cream sm:text-2xl">
+            Entra al grupo de WhatsApp antes de irte
+          </h2>
+          <p className="mt-2 text-sm text-muted sm:text-base">
+            El libro te da la base, pero en el canal de WhatsApp y Telegram es donde lanzamos los
+            relojes con margen real y comentamos el mercado cada semana.
           </p>
-          <div className="mt-5">
-            <TelegramButton label="Entrar al canal" />
+          <div className="mt-5 flex flex-col gap-2.5 sm:flex-row">
+            <WhatsAppButton label="Entrar al grupo de WhatsApp" className="w-full sm:w-auto" />
+            <TelegramButton label="Unirme a Telegram" className="w-full sm:w-auto" />
           </div>
         </div>
 
-        <div className="mt-10 text-cream/70">
+        <div className="mt-8 text-sm text-muted">
           <p>Nos vemos entre calibres, referencias y chollazos.</p>
-          <p className="mt-4">Un saludo,</p>
-          <p className="font-serif text-lg text-cream">Tony — Master Collections</p>
-          <p className="mt-1 text-sm italic text-muted">
-            «Aquí no vendemos humo, vendemos relojes (buenos).»
+          <p className="mt-3 font-display text-base font-bold text-cream">
+            Toni — Master Collections
+          </p>
+          <p className="mt-0.5 font-mono text-xs text-gold">
+            «Aquí no vendemos humo, movemos relojes de verdad.»
           </p>
         </div>
       </div>

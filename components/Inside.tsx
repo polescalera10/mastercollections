@@ -1,75 +1,57 @@
-import type { ComponentType, SVGProps } from 'react';
+import { communityPillars } from '@/lib/content';
+import type { CommunityPillar, IconComponent } from '@/lib/types';
 import { Reveal } from './Reveal';
 import {
-  HandshakeIcon,
   BookIcon,
   ChartIcon,
-  UsersIcon,
+  HandshakeIcon,
   ScaleIcon,
   ShieldCheckIcon,
+  SparklesIcon,
+  UsersIcon,
 } from './Icons';
 
-type Value = {
-  Icon: ComponentType<SVGProps<SVGSVGElement>>;
-  title: string;
-  desc: string;
+const iconMap: Record<CommunityPillar['iconName'], IconComponent> = {
+  handshake: HandshakeIcon,
+  shield: ShieldCheckIcon,
+  book: BookIcon,
+  chart: ChartIcon,
+  scale: ScaleIcon,
+  users: UsersIcon,
+  sparkles: SparklesIcon,
 };
-
-const values: Value[] = [
-  {
-    Icon: HandshakeIcon,
-    title: 'Compraventa entre miembros',
-    desc: 'Compra y vende a gente de la comunidad, no a desconocidos. Menos sustos, mejores precios.',
-  },
-  {
-    Icon: ShieldCheckIcon,
-    title: 'Comprar sin que te la cuelen',
-    desc: 'Cómo verificar un reloj y a un vendedor antes de soltar el dinero. La parte que nadie te cuenta.',
-  },
-  {
-    Icon: BookIcon,
-    title: 'Guías reales, no relleno',
-    desc: 'Qué mirar en cada marca, qué papeles pedir y cómo no pagar de más. Sacado de la experiencia.',
-  },
-  {
-    Icon: ChartIcon,
-    title: 'Análisis de mercado',
-    desc: 'Qué sube, qué baja y por qué. Para que compres con criterio y vendas en el momento bueno.',
-  },
-  {
-    Icon: ScaleIcon,
-    title: 'Comparativas de plataformas',
-    desc: 'Chrono24, Wallapop, Vinted, Catawiki: dónde conviene comprar o vender según el reloj.',
-  },
-  {
-    Icon: UsersIcon,
-    title: 'Comunidad activa',
-    desc: 'Gente que responde de verdad. Pregunta una duda y tendrás respuesta el mismo día.',
-  },
-];
 
 export function Inside() {
   return (
-    <section id="comunidad" className="border-y border-cream/10 bg-graphite/40">
-      <div className="container-page py-20 sm:py-28">
+    <section id="comunidad" className="border-y border-cream/10 bg-graphite/60 py-14 sm:py-24 scroll-mt-20">
+      <div className="container-page">
         <Reveal>
-          <span className="eyebrow">Dentro de la comunidad</span>
-          <h2 className="mt-4 max-w-2xl font-serif text-3xl font-semibold leading-tight tracking-tight text-cream sm:text-4xl">
-            Lo que te llevas al entrar.
+          <span className="eyebrow">DENTRO DEL CLUB</span>
+          <h2 className="mt-3 max-w-2xl font-display text-2xl font-bold leading-tight tracking-tight text-cream sm:mt-4 sm:text-4xl">
+            Lo que pasa dentro cuando entras al grupo.
           </h2>
+          <p className="mt-2 max-w-2xl text-sm text-muted sm:mt-3 sm:text-base">
+            Nada de cursos teóricos aburridos. Aquí ves operaciones reales, aprendes a detectar
+            trampas y hablas directo con gente que compra y vende cada semana.
+          </p>
         </Reveal>
 
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {values.map((v, i) => {
-            const { Icon } = v;
+        <div className="mt-8 grid grid-cols-1 gap-4 sm:mt-12 sm:grid-cols-2 lg:grid-cols-3 sm:gap-5">
+          {communityPillars.map((v, i) => {
+            const Icon = iconMap[v.iconName];
             return (
-              <Reveal as="div" key={v.title} delay={(i % 3) * 0.07}>
-                <article className="group h-full rounded-2xl border border-cream/10 bg-ink/40 p-7 transition-colors duration-200 hover:border-gold/40">
-                  <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-gold/10 text-gold transition-colors duration-200 group-hover:bg-gold/20">
-                    <Icon className="h-6 w-6" />
-                  </span>
-                  <h3 className="mt-5 font-serif text-lg font-semibold text-cream">{v.title}</h3>
-                  <p className="mt-2 text-cream/70">{v.desc}</p>
+              <Reveal as="div" key={v.title} delay={(i % 3) * 0.06}>
+                <article className="group h-full rounded-2xl border border-cream/10 bg-ink p-5 transition-colors duration-200 hover:border-gold/50 sm:p-7">
+                  <div className="flex items-center justify-between">
+                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-gold/30 bg-gold/10 text-gold transition-colors duration-200 group-hover:bg-gold group-hover:text-ink">
+                      <Icon className="h-5 w-5" />
+                    </span>
+                    <span className="font-mono text-xs font-semibold text-muted">
+                      // 0{i + 1}
+                    </span>
+                  </div>
+                  <h3 className="mt-4 font-display text-lg font-bold text-cream">{v.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted">{v.desc}</p>
                 </article>
               </Reveal>
             );
