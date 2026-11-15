@@ -2,7 +2,7 @@
 
 Landing de una sola página para **Master Collections**, comunidad de compraventa y aprendizaje sobre relojes de segunda mano. Misión única: que el visitante se una a la **comunidad gratuita de Telegram**.
 
-Construida con **Next.js 14 (App Router) + TypeScript + Tailwind CSS + Framer Motion**. Totalmente estática (SSG), pensada para desplegar en **Vercel** sin backend ni base de datos.
+Construida con **Next.js 14 (App Router) + TypeScript + Tailwind CSS + Framer Motion**. Home y catálogo son dinámicos (leen el catálogo del almacenamiento); el resto es estático.
 
 ## Arrancar en local
 
@@ -21,16 +21,20 @@ npm run start   # servir el build
 npm run lint    # linting
 ```
 
-## Desplegar en Vercel
+## Despliegue
 
-1. Sube el repositorio a GitHub.
-2. En [vercel.com](https://vercel.com) → **New Project** → importa el repo.
-3. Framework detectado automáticamente: **Next.js**. No hace falta tocar nada.
-4. Deploy. Cada push a `main` redeploya solo.
+### Demo (Netlify) — datos ficticios
 
-Antes de publicar, configura el dominio definitivo. La URL canónica está en
-[`lib/site.ts`](lib/site.ts) (`siteUrl`); cámbiala si el dominio final es distinto de
-`https://www.mastercollectionsclub.com`.
+URL: https://mastercollections-demo.netlify.app (proyecto Netlify `mastercollections-demo`).
+
+- `netlify.toml` activa `NEXT_PUBLIC_DEMO_MODE=true` en el build: aviso "Demo · datos ficticios", `noindex` y `robots.txt` con `Disallow: /`.
+- El catálogo y las fotos subidas viven en **Netlify Blobs** (`lib/storage.ts`). La primera vez que se lee el catálogo en modo demo se siembran 6 piezas ficticias (`lib/demo-watches.ts`, ilustraciones en `public/demo/`).
+- `ADMIN_PASSWORD` está como variable secreta del proyecto en Netlify. Sin ella (o fuera de Netlify) `/admin` queda desactivado: **no hay contraseña por defecto**.
+- Desplegar: `netlify deploy --build --prod` (proyecto ya enlazado con `netlify link --id f387641a-f082-4162-8907-ae9e1acf4533`).
+
+### Producción actual (Vercel)
+
+El dominio real sigue en Vercel (auto-deploy al pushear a `main`). Allí no hay Blobs: el catálogo se muestra vacío y `/admin` está desactivado. Para activar el catálogo en producción habrá que elegir almacenamiento (migrar a Netlify o conectar una base de datos) y definir `ADMIN_PASSWORD`.
 
 ## Qué tienes que rellenar (busca `TODO` en el código)
 
@@ -70,7 +74,9 @@ Todos los datos pendientes están marcados con `// TODO` o `[TODO]`. Los princip
 | `/links` | Hub estilo Linktree: Telegram, Web, YouTube, Instagram, TikTok, ebook. |
 | `/ebook-gratis` | Captura de lead (Nombre + Email) para el ebook gratuito. |
 | `/ebook-gratis/gracias` | Descarga directa del PDF + CTA a Telegram (replica el email de entrega). |
-| `/legal`, `/privacidad` | Textos legales básicos. |
+| `/relojes` | Escaparate de drops (catálogo). |
+| `/admin` | Panel privado: alta de relojes, fotos, estados y difusión a Telegram/WhatsApp. |
+| `/legal`, `/privacidad`, `/cookies` | Textos legales. |
 
 ## Captura del ebook (leads + descarga)
 
