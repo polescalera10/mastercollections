@@ -26,7 +26,7 @@ export const links = {
 
 /** Navegación principal del sitio (Mobile-First). */
 export const navItems: NavItem[] = [
-  { href: '/#relojes', label: 'Drops / Relojes' },
+  { href: '/relojes', label: 'Drops / Relojes' },
   { href: '/#comunidad', label: 'Comunidad' },
   { href: '/#contenido', label: 'Contenido' },
   { href: '/#faq', label: 'FAQ' },
