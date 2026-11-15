@@ -63,7 +63,7 @@ export default function PrivacidadPage() {
           <h2 className="font-serif text-2xl text-cream">Dónde se guardan tus datos</h2>
           <p>
             Los contactos se gestionan con <strong className="text-cream">Brevo</strong> (plataforma
-            de email marketing) y el sitio se aloja en <strong className="text-cream">Vercel</strong>.
+            de email marketing) y el sitio se aloja en <strong className="text-cream">Netlify</strong>.
             Ambos actúan como encargados del tratamiento conforme al art. 28 RGPD. Si alguno de
             estos proveedores tratara datos fuera del Espacio Económico Europeo, la transferencia se
             realizará con las garantías previstas en el capítulo V del RGPD.

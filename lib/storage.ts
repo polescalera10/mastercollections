@@ -4,7 +4,7 @@ import { getStore } from '@netlify/blobs';
  * Almacenamiento persistente sobre Netlify Blobs (clave-valor, incluido en todos
  * los planes). Netlify inyecta las credenciales en producción y en `netlify dev`.
  *
- * Fuera de Netlify (p. ej. el despliegue actual de Vercel) no hay almacenamiento:
+ * Fuera de Netlify (p. ej. `next dev` en local sin `netlify dev`) no hay almacenamiento:
  * la web sigue funcionando con el catálogo vacío y /admin queda desactivado.
  */
 export function hasStorage(): boolean {

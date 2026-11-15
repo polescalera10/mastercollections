@@ -91,7 +91,7 @@ export async function publishToTelegram(watch: WatchItem): Promise<ChannelDispat
       ok: true,
       mode: 'manual_ready',
       detail:
-        'Texto listo para copiar. Para envío 100% automático, añade TELEGRAM_BOT_TOKEN y TELEGRAM_CHAT_ID en .env / Vercel.',
+        'Texto listo para copiar. Para envío 100% automático, añade TELEGRAM_BOT_TOKEN y TELEGRAM_CHAT_ID en .env / Netlify.',
       externalUrl: links.telegram,
     };
   }

@@ -12,7 +12,7 @@ import { NextResponse } from 'next/server';
  * Para activar el guardado en Brevo (gratis, contactos ilimitados):
  *   1. Crea cuenta en https://www.brevo.com y una lista de contactos.
  *   2. Copia tu API key (Settings → SMTP & API → API Keys).
- *   3. Añade en Vercel (Project → Settings → Environment Variables):
+ *   3. Añade en Netlify (Project configuration → Environment variables):
  *        BREVO_API_KEY = xkeysib-...
  *        BREVO_LIST_ID = 3          (el ID numérico de tu lista)
  *   4. Redeploy. Listo.
@@ -42,7 +42,7 @@ const MAX_BODY_BYTES = 2_048;
 
 /**
  * Rate limiting básico en memoria por IP: máx. 5 envíos por ventana de 10 min.
- * Sin infra nueva: en Vercel cada instancia serverless tiene su propio Map, así
+ * Sin infra nueva: en Netlify cada instancia serverless tiene su propio Map, así
  * que es un límite "best-effort" (suficiente contra spam simple; para un límite
  * estricto haría falta un almacén compartido tipo Upstash/KV).
  */
@@ -71,7 +71,9 @@ function pruneHits() {
 }
 
 function clientIp(request: Request): string {
-  // En Vercel, x-forwarded-for lleva la IP real del cliente en primera posición.
+  // Netlify expone la IP real en x-nf-client-connection-ip; x-forwarded-for es el respaldo.
+  const nf = request.headers.get('x-nf-client-connection-ip');
+  if (nf) return nf.trim();
   const fwd = request.headers.get('x-forwarded-for');
   return fwd ? fwd.split(',')[0].trim() : 'unknown';
 }

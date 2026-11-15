@@ -91,7 +91,7 @@ que es **agnóstica de proveedor**:
   guarda el contacto todavía.
 - Para **guardar los emails en Brevo** (gratis, contactos ilimitados):
   1. Crea cuenta en [brevo.com](https://www.brevo.com) y una lista de contactos.
-  2. En Vercel → Project → Settings → Environment Variables, añade:
+  2. En Netlify → Project configuration → Environment variables, añade:
      - `BREVO_API_KEY` = tu API key (`xkeysib-…`)
      - `BREVO_LIST_ID` = el ID numérico de tu lista
   3. Redeploy. A partir de ahí, cada alta entra en tu lista de Brevo.
