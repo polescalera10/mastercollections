@@ -2,7 +2,7 @@
 
 Landing de una sola página para **Master Collections**, comunidad de compraventa y aprendizaje sobre relojes de segunda mano. Misión única: que el visitante se una a la **comunidad gratuita de Telegram**.
 
-Construida con **Next.js 14 (App Router) + TypeScript + Tailwind CSS + Framer Motion**. Home y catálogo son dinámicos (leen el catálogo del almacenamiento); el resto es estático.
+Construida con **Next.js 16 (App Router, React 19) + TypeScript + Tailwind CSS + Framer Motion**. Home y catálogo son dinámicos (leen el catálogo del almacenamiento); el resto es estático.
 
 ## Arrancar en local
 
@@ -32,9 +32,9 @@ URL: https://mastercollections-demo.netlify.app (proyecto Netlify `mastercollect
 - `ADMIN_PASSWORD` está como variable secreta del proyecto en Netlify. Sin ella (o fuera de Netlify) `/admin` queda desactivado: **no hay contraseña por defecto**.
 - Desplegar: `netlify deploy --build --prod` (proyecto ya enlazado con `netlify link --id f387641a-f082-4162-8907-ae9e1acf4533`).
 
-### Producción actual (Vercel)
+### Autodeploy
 
-El dominio real sigue en Vercel (auto-deploy al pushear a `main`). Allí no hay Blobs: el catálogo se muestra vacío y `/admin` está desactivado. Para activar el catálogo en producción habrá que elegir almacenamiento (migrar a Netlify o conectar una base de datos) y definir `ADMIN_PASSWORD`.
+El proyecto Netlify está enlazado al repo `polescalera10/mastercollections` (rama `main`) mediante la app de GitHub de Netlify: **cada push a `main` despliega solo**. Vercel ya no se usa. El dominio `mastercollectionsclub.com` no apunta a Netlify todavía (sigue en el hosting antiguo): para publicarlo hay que añadirlo en Netlify y cambiar el DNS.
 
 ## Qué tienes que rellenar (busca `TODO` en el código)
 

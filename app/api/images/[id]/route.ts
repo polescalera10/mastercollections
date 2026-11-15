@@ -4,13 +4,14 @@ export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 /** Sirve las fotos subidas desde /admin (guardadas en Netlify Blobs). */
-export async function GET(_request: Request, { params }: { params: { id: string } }) {
-  if (!/^[A-Za-z0-9_-]{8,40}$/.test(params.id)) {
+export async function GET(_request: Request, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  if (!/^[A-Za-z0-9_-]{8,40}$/.test(id)) {
     return new Response('Not found', { status: 404 });
   }
 
   try {
-    const image = await getImage(params.id);
+    const image = await getImage(id);
     if (!image) return new Response('Not found', { status: 404 });
 
     return new Response(image.data, {

@@ -2,7 +2,7 @@
  * Cabeceras de seguridad aplicadas a todas las rutas.
  * Nota: no se define una Content-Security-Policy completa porque los scripts
  * inline de Next.js exigirían nonces/hashes y romperían el render; se limita
- * a frame-ancestors (anti-clickjacking). HSTS no se añade aquí porque Vercel
+ * a frame-ancestors (anti-clickjacking). HSTS no se añade aquí porque Netlify
  * ya la sirve por defecto en dominios con HTTPS.
  */
 const securityHeaders = [
