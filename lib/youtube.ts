@@ -1,8 +1,11 @@
 /**
- * Últimos vídeos del canal de YouTube a través de su feed RSS público (sin API key).
+ * Últimos vídeos largos (sin Shorts) del canal de YouTube a través de su feed RSS público
+ * (sin API key). Usa la lista automática de subidas largas de YouTube: `UULF` + ID del canal
+ * sin el prefijo `UC` (la de Shorts es `UUSH`).
  * Si el feed falla o tarda, devuelve una lista vacía y la web muestra tarjetas a los canales.
  */
 export const YOUTUBE_CHANNEL_ID = 'UCs0RH5r_b98QfHzRsMep1Lg'; // @MasterCollectionsClub
+const LONG_FORM_PLAYLIST_ID = `UULF${YOUTUBE_CHANNEL_ID.slice(2)}`;
 
 export type LatestVideo = {
   id: string;
@@ -23,7 +26,7 @@ function decodeEntities(text: string): string {
 export async function getLatestVideos(limit = 3): Promise<LatestVideo[]> {
   try {
     const res = await fetch(
-      `https://www.youtube.com/feeds/videos.xml?channel_id=${YOUTUBE_CHANNEL_ID}`,
+      `https://www.youtube.com/feeds/videos.xml?playlist_id=${LONG_FORM_PLAYLIST_ID}`,
       { next: { revalidate: 1800 }, signal: AbortSignal.timeout(5000) },
     );
     if (!res.ok) return [];
