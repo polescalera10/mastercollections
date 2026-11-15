@@ -1,6 +1,10 @@
 [build]
   command = "npm run build"
 
+# Runtime de Next.js en Netlify (en los builds por git no se instala solo).
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
 # Despliegue de DEMO (datos ficticios). Estas variables se inyectan en el build.
 [context.production.environment]
   NEXT_PUBLIC_DEMO_MODE = "true"
