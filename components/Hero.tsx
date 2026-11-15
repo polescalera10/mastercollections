@@ -2,7 +2,8 @@ import Image from 'next/image';
 import { Reveal } from './Reveal';
 import { WhatsAppButton } from './WhatsAppButton';
 import { TelegramButton } from './TelegramButton';
-import { metricLabel, metrics } from '@/lib/site';
+import { links, socialProof } from '@/lib/site';
+import { ArrowRightIcon } from './Icons';
 
 /**
  * HERO Mobile-First con estética rebelde, joven y street-horology.
@@ -29,22 +30,22 @@ export function Hero() {
               <div className="inline-flex flex-wrap items-center gap-2 rounded-full border border-gold/30 bg-graphite/90 px-3 py-1">
                 <span className="h-2 w-2 animate-pulse rounded-full bg-action" />
                 <span className="font-mono text-[11px] font-semibold uppercase tracking-wider text-gold">
-                  RELOJERÍA SIN CORBATA · WATCH TRADING REAL
+                  RELOJERÍA SIN CORBATA · COMUNIDAD GRATIS
                 </span>
               </div>
             </Reveal>
 
             <Reveal delay={0.05}>
               <h1 className="mt-4 font-display text-[2.15rem] font-bold leading-[1.04] tracking-tight text-cream sm:mt-5 sm:text-5xl lg:text-6xl">
-                Rompemos el sectarismo de los relojes.{' '}
+                Relojes sin postureo.{' '}
                 <span className="text-gold">Compra, vende y aprende</span> sin que te la cuelen.
               </h1>
             </Reveal>
 
             <Reveal delay={0.1}>
               <p className="mt-4 max-w-xl text-base leading-relaxed text-muted sm:mt-5 sm:text-lg">
-                Un chaval de 30 años abriendo de par en par un sector cerrado. Drops reales, precios
-                de calle, cero postureo y una comunidad donde compartimos todo.
+                Comunidad gratuita en WhatsApp y Telegram donde Toni comparte oportunidades, precios
+                de cierre y todo lo que ha aprendido comprando y vendiendo relojes.
               </p>
             </Reveal>
 
@@ -62,22 +63,21 @@ export function Hero() {
               </div>
             </Reveal>
 
-            {/* Chips de prueba social adaptados a móvil */}
+            {/* Chips de prueba social: solo cifras con dato real */}
             <Reveal delay={0.2}>
-              <div className="mt-6 flex flex-wrap items-center gap-2 text-xs text-muted">
-                <span className="rounded-lg border border-cream/10 bg-graphite px-2.5 py-1 font-mono text-[11px] text-cream">
+              <ul className="mt-6 flex flex-wrap items-center gap-2 text-xs text-muted">
+                <li className="rounded-lg border border-cream/10 bg-graphite px-2.5 py-1 font-mono text-[11px] text-cream">
                   100% GRATIS
-                </span>
-                <span className="rounded-lg border border-cream/10 bg-graphite px-2.5 py-1 font-mono text-[11px] text-cream">
-                  +{metricLabel(metrics.youtubeSubscribers)} YouTube
-                </span>
-                <span className="rounded-lg border border-cream/10 bg-graphite px-2.5 py-1 font-mono text-[11px] text-cream">
-                  +{metricLabel(metrics.tiktokFollowers)} TikTok
-                </span>
-                <span className="rounded-lg border border-cream/10 bg-graphite px-2.5 py-1 font-mono text-[11px] text-cream">
-                  +{metricLabel(metrics.telegramMembers)} Comunidad
-                </span>
-              </div>
+                </li>
+                {socialProof().map((p) => (
+                  <li
+                    key={p.key}
+                    className="rounded-lg border border-cream/10 bg-graphite px-2.5 py-1 font-mono text-[11px] text-cream"
+                  >
+                    {p.value} {p.short}
+                  </li>
+                ))}
+              </ul>
             </Reveal>
           </div>
 
@@ -98,20 +98,23 @@ export function Hero() {
                   className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/20 to-transparent"
                 />
 
-                {/* Overlay inferior tipo ticker / drop */}
-                <div className="absolute inset-x-3 bottom-3 flex items-center justify-between gap-2 rounded-xl border border-cream/15 bg-ink/85 px-3.5 py-2.5 backdrop-blur-md sm:inset-x-4 sm:bottom-4">
-                  <div className="min-w-0">
+                {/* Pie de la tarjeta: enlace al canal */}
+                <a
+                  href={links.whatsapp}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group absolute inset-x-3 bottom-3 flex items-center justify-between gap-3 rounded-xl border border-cream/15 bg-ink/85 px-3.5 py-2.5 backdrop-blur-md transition-colors hover:border-action/60 sm:inset-x-4 sm:bottom-4"
+                >
+                  <span className="min-w-0">
                     <span className="block font-mono text-[10px] uppercase tracking-wider text-gold">
-                      CANAL OFICIAL ACTIVO
+                      EN EL CANAL
                     </span>
-                    <p className="truncate font-display text-xs font-bold text-cream sm:text-sm">
-                      Drops, alertas de chollos y análisis en directo
-                    </p>
-                  </div>
-                  <span className="shrink-0 rounded-lg bg-action/20 px-2.5 py-1 font-mono text-[11px] font-semibold text-action">
-                    LIVE
+                    <span className="block truncate font-display text-xs font-bold text-cream sm:text-sm">
+                      Piezas nuevas, precios de cierre y análisis
+                    </span>
                   </span>
-                </div>
+                  <ArrowRightIcon className="h-4 w-4 shrink-0 text-action transition-transform group-hover:translate-x-0.5" />
+                </a>
               </div>
             </div>
           </Reveal>

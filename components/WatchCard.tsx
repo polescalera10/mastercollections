@@ -27,6 +27,12 @@ const statusConfig: Record<
   },
 };
 
+const ctaLabel: Record<WatchItem['status'], string> = {
+  disponible: 'Consultar por WhatsApp',
+  reservado: 'Avisadme si se libera',
+  vendido: 'Avisadme de piezas como esta',
+};
+
 export function WatchCard({ watch }: WatchCardProps) {
   const status = statusConfig[watch.status];
   const mainImage = watch.images[0] ?? '/demo/placeholder.svg';
@@ -51,7 +57,9 @@ export function WatchCard({ watch }: WatchCardProps) {
           src={mainImage}
           alt={`${watch.brand} ${watch.model} ${watch.reference}`}
           loading="lazy"
-          className="relative z-10 h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
+          className={`relative z-10 h-full w-full object-contain transition-transform duration-500 group-hover:scale-105 ${
+            watch.status === 'vendido' ? 'opacity-50 grayscale' : ''
+          }`}
         />
 
         {/* Badge de estado (Mobile-First, compacto) */}
@@ -122,7 +130,7 @@ export function WatchCard({ watch }: WatchCardProps) {
             className="inline-flex min-h-[42px] items-center justify-center gap-2 rounded-xl bg-action px-4 py-2.5 font-display text-xs font-bold text-ink transition-colors hover:bg-action-dark"
           >
             <WhatsAppIcon className="h-4 w-4 shrink-0" />
-            <span>Ver drop en WhatsApp</span>
+            <span>{ctaLabel[watch.status]}</span>
           </a>
           <a
             href={links.telegram}

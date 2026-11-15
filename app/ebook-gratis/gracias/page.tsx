@@ -52,14 +52,14 @@ export default function GraciasPage() {
         {/* Siguiente paso: Canal de WhatsApp */}
         <div className="mt-8 rounded-2xl border border-gold/30 bg-graphite p-5 sm:mt-10 sm:p-8">
           <span className="font-mono text-xs font-bold uppercase tracking-wider text-gold">
-            PASO 2 · OBLIGATORIO SI TE GUSTAN LOS RELOJES
+            SIGUIENTE PASO
           </span>
           <h2 className="mt-2 font-display text-xl font-bold text-cream sm:text-2xl">
             Entra al grupo de WhatsApp antes de irte
           </h2>
           <p className="mt-2 text-sm text-muted sm:text-base">
             El libro te da la base, pero en el canal de WhatsApp y Telegram es donde lanzamos los
-            relojes con margen real y comentamos el mercado cada semana.
+            relojes y comentamos el mercado cada semana.
           </p>
           <div className="mt-5 flex flex-col gap-2.5 sm:flex-row">
             <WhatsAppButton label="Entrar al grupo de WhatsApp" className="w-full sm:w-auto" />
@@ -68,7 +68,7 @@ export default function GraciasPage() {
         </div>
 
         <div className="mt-8 text-sm text-muted">
-          <p>Nos vemos entre calibres, referencias y chollazos.</p>
+          <p>Nos vemos dentro.</p>
           <p className="mt-3 font-display text-base font-bold text-cream">
             Toni — Master Collections
           </p>

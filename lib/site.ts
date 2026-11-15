@@ -26,7 +26,7 @@ export const links = {
 
 /** Navegación principal del sitio (Mobile-First). */
 export const navItems: NavItem[] = [
-  { href: '/relojes', label: 'Drops / Relojes' },
+  { href: '/relojes', label: 'Relojes' },
   { href: '/#comunidad', label: 'Comunidad' },
   { href: '/#contenido', label: 'Contenido' },
   { href: '/#faq', label: 'FAQ' },
@@ -55,7 +55,22 @@ export const metrics: SiteMetrics = {
  */
 export function metricLabel(value: number | null, placeholder = '[dato]'): string {
   if (value === null) return placeholder;
-  return new Intl.NumberFormat('es-ES').format(value);
+  return new Intl.NumberFormat('es-ES', { useGrouping: 'always' }).format(value);
+}
+
+/**
+ * Cifras de prueba social ya formateadas ("+6.500"). Solo incluye las que tienen
+ * dato real: nunca se pinta un placeholder en la web pública.
+ */
+export function socialProof(): { key: string; label: string; short: string; value: string }[] {
+  const rows: { key: string; label: string; short: string; value: number | null }[] = [
+    { key: 'youtube', label: 'en YouTube', short: 'YouTube', value: metrics.youtubeSubscribers },
+    { key: 'tiktok', label: 'en TikTok', short: 'TikTok', value: metrics.tiktokFollowers },
+    { key: 'telegram', label: 'en Telegram', short: 'Telegram', value: metrics.telegramMembers },
+  ];
+  return rows
+    .filter((r): r is typeof r & { value: number } => r.value !== null)
+    .map((r) => ({ key: r.key, label: r.label, short: r.short, value: `+${metricLabel(r.value)}` }));
 }
 
 /**
@@ -75,6 +90,6 @@ export const site = {
   legalName: 'Master Collections',
   founder: 'Toni Abella',
   description:
-    'Relojería sin corbata y sin humo. Compra, vende y aprende de relojes con criterio real en nuestra comunidad de WhatsApp y Telegram.',
+    'Relojería sin corbata y sin humo. Compra, vende y aprende de relojes en nuestra comunidad gratuita de WhatsApp y Telegram.',
   locale: 'es-ES',
 } as const;

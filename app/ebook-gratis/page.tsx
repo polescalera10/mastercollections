@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { Logo } from '@/components/Logo';
 import { EbookForm } from '@/components/EbookForm';
 import { Footer } from '@/components/Footer';
-import { metricLabel, metrics, ebookTitle } from '@/lib/site';
+import { socialProof, ebookTitle } from '@/lib/site';
 import { ebookChapters, ebookOutcomes, ebookPainPoints } from '@/lib/content';
 import { ShieldCheckIcon, ChartIcon, ArrowRightIcon } from '@/components/Icons';
 
@@ -119,7 +119,7 @@ export default function EbookPage() {
                 <div className="mt-5 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-cream/10 bg-graphite/40 px-4 py-3.5">
                   <AuthorChip />
                   <p className="font-mono text-xs text-muted">
-                    +{metricLabel(metrics.youtubeSubscribers)} YT · +{metricLabel(metrics.tiktokFollowers)} TikTok
+                    {socialProof().filter((p) => p.key !== 'telegram').map((p) => `${p.value} ${p.short}`).join(' · ')}
                   </p>
                 </div>
               </div>

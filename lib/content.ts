@@ -18,11 +18,11 @@ export const profiles: ProfileItem[] = [
   },
   {
     title: 'El que mueve piezas (Trading)',
-    desc: 'Buscas rotación, liquidez y margen real. Aprendes a detectar qué referencias se venden en 24h y cuáles son un ladrillo.',
+    desc: 'Buscas rotación y margen. Aprendes qué referencias se mueven rápido y cuáles se quedan meses en la vitrina.',
   },
   {
     title: 'El coleccionista sin postureo',
-    desc: 'Pasas del elitismo de las joyerías tradicionales. Quieres hablar de calibres, precios reales de cierre y oportunidades con gente como tú.',
+    desc: 'Pasas del elitismo de las joyerías tradicionales. Quieres hablar de calibres, precios de cierre y oportunidades con gente como tú.',
   },
 ];
 
@@ -30,32 +30,32 @@ export const communityPillars: CommunityPillar[] = [
   {
     iconName: 'handshake',
     title: 'Drops y trato directo sin intermediarios',
-    desc: 'Piezas que lanzamos primero en el canal de WhatsApp y Telegram. Sin comisiones absurdas de plataformas.',
+    desc: 'Las piezas salen primero en el canal de WhatsApp y Telegram, y tratas directamente con nosotros. Sin comisiones de plataforma.',
   },
   {
     iconName: 'shield',
     title: 'Radar anti-fakes y anti-Frankenstein',
-    desc: 'Te enseñamos a destripar un reloj antes de pagarlo: esferas repintadas, piezas aftermarket, calibres y documentación.',
+    desc: 'Aprende a revisar un reloj antes de pagarlo: esferas repintadas, piezas aftermarket, calibres y documentación.',
   },
   {
     iconName: 'chart',
-    title: 'Precios reales de calle (no de escaparate)',
-    desc: 'Olvida los precios inflados de Chrono24. Aquí hablamos del precio real al que se cierran los tratos hoy.',
+    title: 'Precios de cierre, no de escaparate',
+    desc: 'Un precio de anuncio no es el precio al que se cierra la operación. Aquí comparamos las dos cosas.',
   },
   {
     iconName: 'book',
     title: 'Guías callejeras y herramientas',
-    desc: 'Desde nuestro ebook de 70 páginas hasta las apps y checklists que usamos cada semana para cazar chollos.',
+    desc: 'Del ebook de 70 páginas a las apps y checklists que usamos cada semana para buscar y comparar piezas.',
   },
   {
     iconName: 'scale',
     title: 'Dónde comprar y dónde vender',
-    desc: 'Subastas, ferias, Wallapop, Vinted, Chrono24 o grupos privados: cómo moverte en cada terreno sin que te la cuelen.',
+    desc: 'Subastas, ferias, Wallapop, Vinted, Chrono24 o grupos privados: cómo moverte en cada sitio sin que te la cuelen.',
   },
   {
     iconName: 'sparkles',
-    title: 'Eventos, quedadas y comunidad joven',
-    desc: 'Rompemos el molde rancio de la relojería tradicional: contenido diario en redes, transparencia total y eventos presenciales.',
+    title: 'Quedadas y comunidad',
+    desc: 'Contenido en redes, preguntas abiertas y encuentros presenciales para hablar de relojes sin postureo.',
   },
 ];
 
@@ -79,8 +79,8 @@ export const featuredVideos: VideoItem[] = [
 
 export const ebookOutcomes: string[] = [
   'Evita timos, falsificaciones y relojes "Frankenstein" desde tu primera compra',
-  'Detecta chollos por debajo de mercado con margen real de reventa',
-  'Conoce las 3 marcas clave con liquidez y salida rápida (y cuáles esquivar)',
+  'Aprende a detectar oportunidades por debajo del precio de mercado',
+  'Conoce las 3 marcas clave para empezar con salida rápida (y cuáles esquivar)',
 ];
 
 export const ebookChapters: EbookChapter[] = [
@@ -90,26 +90,26 @@ export const ebookChapters: EbookChapter[] = [
   },
   {
     title: 'Las 3 marcas que todo revendedor debe conocer',
-    desc: 'Hay muchas marcas, pero si quieres empezar con margen, fiabilidad y salida rápida solo necesitas tres. Con ejemplos reales.',
+    desc: 'Hay muchas marcas, pero para empezar con fiabilidad y salida rápida solo necesitas tres. Con ejemplos.',
   },
   {
-    title: 'Dónde encontrar chollos por debajo del mercado',
-    desc: 'Ferias, plataformas, grupos privados… cómo y dónde se consiguen relojes que puedes revender con beneficio.',
+    title: 'Dónde encontrar oportunidades',
+    desc: 'Ferias, plataformas, grupos privados… cómo y dónde se encuentran relojes a buen precio.',
   },
   {
     title: 'Historias reales de gente como tú',
-    desc: 'Ejemplos de coleccionistas y revendedores que empezaron con poco y hoy tienen una colección o un ingreso extra cada mes.',
+    desc: 'Ejemplos de coleccionistas y revendedores que empezaron con poco presupuesto y cómo avanzaron.',
   },
   {
     title: 'Las apps y webs que usamos cada semana',
-    desc: 'Las herramientas reales que usamos en Master Collections para buscar, verificar y calcular márgenes antes de comprar.',
+    desc: 'Las herramientas que usamos en Master Collections para buscar, comparar y calcular márgenes antes de comprar.',
   },
 ];
 
 export const ebookPainPoints: EbookPainPoint[] = [
   {
-    title: 'Pagaste de más y lo viste 100 € más barato',
-    desc: 'Aprende a analizar el precio real de cierre frente al precio humo, y deja de pagar el pato en tu primera compra.',
+    title: 'Pagaste de más y lo viste más barato a la semana',
+    desc: 'Aprende a comparar el precio de cierre con el precio de anuncio y no pagues de más en tu primera compra.',
   },
   {
     title: '¿Un chollo… o un Frankenstein montado a piezas?',
@@ -117,6 +117,6 @@ export const ebookPainPoints: EbookPainPoint[] = [
   },
   {
     title: 'Miras relojes sin saber cuál vale la pena',
-    desc: 'Cómo filtrar rápido qué referencias tienen liquidez y potencial de revalorización y cuáles son un pisapapeles.',
+    desc: 'Cómo filtrar rápido qué referencias se venden con facilidad y cuáles se quedan en el cajón.',
   },
 ];

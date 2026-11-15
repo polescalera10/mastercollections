@@ -9,7 +9,8 @@ export { hasStorage };
 /** Foto por defecto cuando una pieza no tiene imágenes. */
 export const PLACEHOLDER_IMAGE = '/demo/placeholder.svg';
 
-const SEEDED_KEY = '_meta/seeded';
+// Sube la versión del marcador para volver a cargar los datos de demo (solo piezas `demo-*`).
+const SEEDED_KEY = '_meta/seeded-v2';
 
 function slugify(text: string): string {
   return text
@@ -28,12 +29,8 @@ async function ensureDemoSeed(): Promise<void> {
   if (!isDemo) return;
   const store = watchStore();
   if (await blobExists(store, SEEDED_KEY)) return;
-  const { blobs } = await store.list({ prefix: 'w/' });
-  if (blobs.length === 0) {
-    await Promise.all(
-      buildDemoWatches().map((watch) => store.setJSON(`w/${watch.id}`, watch)),
-    );
-  }
+  // Sobrescribe solo las piezas de demo; las que se creen desde /admin no se tocan.
+  await Promise.all(buildDemoWatches().map((watch) => store.setJSON(`w/${watch.id}`, watch)));
   await store.set(SEEDED_KEY, new Date().toISOString());
 }
 

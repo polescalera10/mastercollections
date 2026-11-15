@@ -31,8 +31,8 @@ export function Inside() {
             Lo que pasa dentro cuando entras al grupo.
           </h2>
           <p className="mt-2 max-w-2xl text-sm text-muted sm:mt-3 sm:text-base">
-            Nada de cursos teóricos aburridos. Aquí ves operaciones reales, aprendes a detectar
-            trampas y hablas directo con gente que compra y vende cada semana.
+            Nada de cursos teóricos. Ves piezas y precios reales, aprendes a detectar trampas y
+            hablas con gente que compra y vende cada semana.
           </p>
         </Reveal>
 

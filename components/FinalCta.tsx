@@ -1,7 +1,7 @@
 import { Reveal } from './Reveal';
 import { WhatsAppButton } from './WhatsAppButton';
 import { TelegramButton } from './TelegramButton';
-import { metricLabel, metrics } from '@/lib/site';
+import { socialProof } from '@/lib/site';
 
 export function FinalCta() {
   return (
@@ -17,7 +17,7 @@ export function FinalCta() {
       <div className="container-page">
         <div className="mx-auto max-w-3xl rounded-3xl border border-cream/15 bg-graphite/90 p-6 text-center shadow-2xl sm:p-12">
           <Reveal>
-            <span className="eyebrow">100% GRATIS · CERO HUMO</span>
+            <span className="eyebrow">GRATIS · SIN COMPROMISO</span>
           </Reveal>
           <Reveal delay={0.05}>
             <h2 className="mt-4 font-display text-2xl font-bold leading-tight tracking-tight text-cream sm:mt-5 sm:text-4xl lg:text-5xl">
@@ -26,8 +26,8 @@ export function FinalCta() {
           </Reveal>
           <Reveal delay={0.1}>
             <p className="mx-auto mt-3 max-w-xl text-sm text-muted sm:mt-4 sm:text-base">
-              Drops, alertas en directo y criterio de calle. Únete ahora al canal
-              oficial de WhatsApp (o al grupo de Telegram).
+              Piezas nuevas, avisos y criterio de calle directo en tu móvil. Entra al canal de
+              WhatsApp o al grupo de Telegram: es gratis y te sales cuando quieras.
             </p>
           </Reveal>
           <Reveal delay={0.15}>
@@ -44,7 +44,9 @@ export function FinalCta() {
           </Reveal>
           <Reveal delay={0.2}>
             <p className="mt-5 font-mono text-xs text-muted">
-              +{metricLabel(metrics.youtubeSubscribers)} en YouTube · +{metricLabel(metrics.tiktokFollowers)} en TikTok · +{metricLabel(metrics.telegramMembers)} en Comunidad
+              {socialProof()
+                .map((p) => `${p.value} ${p.label}`)
+                .join(' · ')}
             </p>
           </Reveal>
         </div>

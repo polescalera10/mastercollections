@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { links } from '@/lib/site';
+import { links, metricLabel, metrics } from '@/lib/site';
 import { Logo } from '@/components/Logo';
 import { WhatsAppButton } from '@/components/WhatsAppButton';
 import {
@@ -32,42 +32,51 @@ const rows: LinkRow[] = [
   {
     href: links.telegram,
     label: 'Comunidad en Telegram',
-    hint: '+2.000 miembros hablando de relojes a diario',
+    hint:
+      metrics.telegramMembers !== null
+        ? `+${metricLabel(metrics.telegramMembers)} miembros hablando de relojes`
+        : 'Grupo abierto para hablar de relojes',
     Icon: TelegramIcon,
     external: true,
   },
   {
     href: '/ebook-gratis',
-    label: 'Ebook Gratis (70 págs)',
-    hint: '«No la cagues con tu primer reloj» — Descarga directa',
+    label: 'Ebook gratis (70 páginas)',
+    hint: '«No la cagues con tu primer reloj» · descarga directa',
     Icon: BookIcon,
     external: false,
   },
   {
     href: '/relojes',
-    label: 'Drops / Relojes disponibles',
-    hint: 'Catálogo de relojes en venta',
+    label: 'Relojes en venta',
+    hint: 'Las piezas disponibles ahora mismo',
     Icon: WatchIcon,
     external: false,
   },
   {
     href: links.youtube,
     label: 'YouTube (@MasterCollectionsClub)',
-    hint: '+6.500 suscriptores · Análisis y mercado sin filtros',
+    hint:
+      metrics.youtubeSubscribers !== null
+        ? `+${metricLabel(metrics.youtubeSubscribers)} suscriptores · Análisis y mercado`
+        : 'Análisis y mercado',
     Icon: YouTubeIcon,
     external: true,
   },
   {
     href: links.tiktok,
     label: 'TikTok (@toniiabella)',
-    hint: '+6.400 seguidores · Relojería callejera en corto',
+    hint:
+      metrics.tiktokFollowers !== null
+        ? `+${metricLabel(metrics.tiktokFollowers)} seguidores · Relojería en vídeo corto`
+        : 'Relojería en vídeo corto',
     Icon: TikTokIcon,
     external: true,
   },
   {
     href: links.instagram,
     label: 'Instagram (@mastercollections_)',
-    hint: 'El día a día, eventos y piezas en muñeca',
+    hint: 'El día a día y piezas en muñeca',
     Icon: InstagramIcon,
     external: true,
   },

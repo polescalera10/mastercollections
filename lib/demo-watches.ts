@@ -31,7 +31,7 @@ const seeds: Seed[] = [
     caseSizeMm: 41,
     movement: 'Automático',
     description:
-      'Acero y bisel cerámico negro. Pulsera Oyster con todos los eslabones. Sin pulidos agresivos, cristal impecable. Pieza de ejemplo para la demo.',
+      'Acero y bisel cerámico negro. Pulsera Oyster con todos los eslabones. Sin pulidos agresivos, cristal impecable.',
     images: ['/demo/watch-diver-black.svg'],
     status: 'disponible',
     featured: true,
@@ -50,7 +50,7 @@ const seeds: Seed[] = [
     caseSizeMm: 42,
     movement: 'Cuerda manual',
     description:
-      'El cronógrafo de referencia. Calibre de cuerda manual, cristal Hesalite y correa de cuero negra. Pieza de ejemplo para la demo.',
+      'El cronógrafo de referencia. Calibre de cuerda manual, cristal Hesalite y correa de cuero negra.',
     images: ['/demo/watch-chrono-black.svg'],
     status: 'disponible',
     featured: true,
@@ -69,7 +69,7 @@ const seeds: Seed[] = [
     caseSizeMm: 39,
     movement: 'Automático',
     description:
-      'Formato 39 mm que sienta de lujo en muñecas medianas. Bisel burdeos y correa de cuero marrón. Se vende sin caja ni papeles. Pieza de ejemplo para la demo.',
+      'Formato 39 mm que sienta de lujo en muñecas medianas. Bisel burdeos y correa de cuero marrón. Se vende sin caja ni papeles.',
     images: ['/demo/watch-heritage-burgundy.svg'],
     status: 'disponible',
     featured: true,
@@ -88,7 +88,7 @@ const seeds: Seed[] = [
     caseSizeMm: 40,
     movement: 'Automático',
     description:
-      'Esfera blanca y caja cuadrada en acero. Sin usar, con película protectora de fábrica. Reservado por un miembro de la comunidad. Pieza de ejemplo para la demo.',
+      'Esfera blanca y caja cuadrada en acero. Sin usar, con película protectora de fábrica. Reservado por un miembro de la comunidad.',
     images: ['/demo/watch-square-white.svg'],
     status: 'reservado',
     featured: false,
@@ -107,7 +107,7 @@ const seeds: Seed[] = [
     caseSizeMm: 41,
     movement: 'Automático',
     description:
-      'Esfera turquesa con acabado sunburst. Ideal como primer automático sin dejarte media nómina. Incluye caja, sin papeles. Pieza de ejemplo para la demo.',
+      'Esfera turquesa con acabado sunburst. Ideal como primer automático sin dejarte media nómina. Incluye caja, sin papeles.',
     images: ['/demo/watch-dress-teal.svg'],
     status: 'disponible',
     featured: false,
@@ -126,7 +126,7 @@ const seeds: Seed[] = [
     caseSizeMm: 41,
     movement: 'Automático',
     description:
-      'Esfera texturizada tipo nieve y movimiento Spring Drive. Vendido en la comunidad la semana pasada. Pieza de ejemplo para la demo.',
+      'Esfera texturizada tipo nieve y movimiento Spring Drive. Vendido en la comunidad la semana pasada.',
     images: ['/demo/watch-snowflake-silver.svg'],
     status: 'vendido',
     featured: false,

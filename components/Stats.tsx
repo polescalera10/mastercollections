@@ -10,7 +10,7 @@ type Stat = {
 const candidates: { value: number | null; label: string; tag: string }[] = [
   { value: metrics.youtubeSubscribers, label: 'Suscriptores YouTube', tag: '@MasterCollectionsClub' },
   { value: metrics.tiktokFollowers, label: 'Seguidores TikTok', tag: '@toniiabella' },
-  { value: metrics.telegramMembers, label: 'Miembros en comunidad', tag: 'WhatsApp & Telegram' },
+  { value: metrics.telegramMembers, label: 'Miembros en el grupo', tag: 'Telegram' },
   { value: metrics.operations, label: 'Operaciones cerradas', tag: 'Trading' },
   { value: metrics.years, label: 'Años en el barro', tag: 'Watch Trading' },
 ];
@@ -25,7 +25,11 @@ export function Stats() {
   return (
     <section className="border-y border-cream/10 bg-graphite/70">
       <div className="container-page py-6 sm:py-10">
-        <dl className="grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-5">
+        <dl
+          className={`grid grid-cols-1 gap-3 sm:gap-5 ${
+            stats.length >= 3 ? 'sm:grid-cols-3' : stats.length === 2 ? 'sm:grid-cols-2' : ''
+          }`}
+        >
           {stats.map((stat, i) => (
             <Reveal
               as="div"

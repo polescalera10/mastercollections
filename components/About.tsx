@@ -37,7 +37,7 @@ export function About() {
                   SIN CORBATA
                 </span>
                 <p className="mt-1 font-display text-xs font-bold leading-snug text-cream sm:text-sm">
-                  Transparencia total en un sector que siempre fue cerrado.
+                  Hablar claro en un sector que siempre fue cerrado.
                 </p>
               </div>
             </div>
@@ -48,7 +48,7 @@ export function About() {
           <div>
             <span className="eyebrow">QUIÉN ESTÁ DETRÁS</span>
             <h2 className="mt-3 font-display text-2xl font-bold leading-tight tracking-tight text-cream sm:mt-4 sm:text-4xl">
-              Soy Toni. 30 años, cero humo y pasión por el hierro.
+              Soy Toni, y me paso el día entre relojes.
             </h2>
             <div className="mt-4 space-y-3.5 text-sm leading-relaxed text-muted sm:mt-5 sm:text-base">
               <p>

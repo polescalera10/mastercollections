@@ -43,7 +43,7 @@ export function Footer() {
           <ul className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted sm:text-sm">
             <li>
               <Link href="/relojes" className="transition-colors hover:text-cream">
-                Drops / Relojes
+                Relojes
               </Link>
             </li>
             <li>
@@ -78,9 +78,6 @@ export function Footer() {
       <div className="border-t border-cream/10">
         <div className="container-page flex items-center justify-between py-5">
           <p className="font-mono text-[11px] text-muted">© {year} MASTER COLLECTIONS</p>
-          <Link href="/admin" className="font-mono text-[11px] text-muted/50 transition-colors hover:text-gold">
-            /ADMIN
-          </Link>
         </div>
       </div>
     </footer>

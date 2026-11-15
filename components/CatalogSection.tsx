@@ -18,19 +18,19 @@ export function CatalogSection({ watches }: CatalogSectionProps) {
       <div className="container-page">
         <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
           <Reveal>
-            <span className="eyebrow">DROPS · WATCH TRADING</span>
+            <span className="eyebrow">EN VENTA</span>
             <h2 className="mt-3 max-w-2xl font-display text-2xl font-bold leading-tight tracking-tight text-cream sm:mt-4 sm:text-4xl">
-              Piezas que movemos en la comunidad.
+              Piezas disponibles ahora.
             </h2>
             <p className="mt-2 max-w-xl text-sm text-muted sm:mt-3 sm:text-base">
-              Cada reloj que entra se lanza en tiempo real en el grupo de WhatsApp, en Telegram y en
-              este escaparate. Sin intermediarios.
+              Cada reloj se publica a la vez en el canal de WhatsApp, en Telegram y aquí. Tratas
+              directamente con nosotros.
             </p>
           </Reveal>
 
           <Reveal delay={0.1}>
             <Link href="/relojes" className="btn-ghost w-full sm:w-auto">
-              <span>Ver todos los drops ({watches.length})</span>
+              <span>Ver todos ({watches.length})</span>
               <ArrowRightIcon className="h-4 w-4" />
             </Link>
           </Reveal>

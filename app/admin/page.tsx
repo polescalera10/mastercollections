@@ -13,7 +13,7 @@ import {
   WatchIcon,
   WhatsAppIcon,
 } from '@/components/Icons';
-import { formatPrice } from '@/lib/site';
+import { formatPrice, siteUrl } from '@/lib/site';
 import type {
   ChannelDispatchResult,
   WatchCondition,
@@ -56,19 +56,18 @@ export default function AdminPage() {
   const [integrations, setIntegrations] = useState<IntegrationStatus | null>(null);
 
   // Estado del formulario de alta omnicanal
-  const [brand, setBrand] = useState('Rolex');
-  const [model, setModel] = useState('Submariner Date');
-  const [reference, setReference] = useState('126610LN');
-  const [year, setYear] = useState('2023');
-  const [price, setPrice] = useState('12450');
-  const [caseSizeMm, setCaseSizeMm] = useState('41');
+  const [brand, setBrand] = useState('');
+  const [model, setModel] = useState('');
+  const [reference, setReference] = useState('');
+  const [year, setYear] = useState('');
+  const [price, setPrice] = useState('');
+  const [caseSizeMm, setCaseSizeMm] = useState('');
   const [condition, setCondition] = useState<WatchCondition>('Excelente');
   const [delivery, setDelivery] = useState<WatchDelivery>('Full Set (Caja y papeles)');
   const [movement, setMovement] = useState<WatchMovement>('Automático');
-  const [description, setDescription] = useState(
-    'Acero Oystersteel, bisel Cerachrom negro, estado impecable sin pulir. Garantía oficial vigente y revisión de estanqueidad superada.',
-  );
-  const [images, setImages] = useState<string[]>(['/demo/placeholder.svg']);
+  const [description, setDescription] = useState('');
+  const [images, setImages] = useState<string[]>([]);
+  const [notice, setNotice] = useState<{ tone: 'ok' | 'error'; text: string } | null>(null);
   const [newImageUrl, setNewImageUrl] = useState('');
 
   // Canales destino
@@ -96,7 +95,7 @@ export default function AdminPage() {
       });
       const data = await res.json();
       if (!res.ok || !data.ok) {
-        setAuthError(data.error ?? 'Clave incorrecta');
+        setAuthError(data.error ?? 'Contraseña incorrecta.');
         setAuthenticated(false);
         return false;
       }
@@ -152,8 +151,8 @@ export default function AdminPage() {
       '',
       description || 'Descripción del reloj...',
       '',
-      `👉 *Ficha y fotos:* https://www.mastercollectionsclub.com/relojes`,
-      `📩 Interesados responder por privado o en el grupo.`,
+      `👉 *Ficha y fotos:* ${siteUrl}/relojes`,
+      `📩 ¿Te interesa? Escríbenos por privado o en el grupo.`,
     ].join('\n');
   }, [brand, model, reference, year, price, caseSizeMm, movement, condition, delivery, description]);
 
@@ -202,6 +201,26 @@ export default function AdminPage() {
     setImages((prev) => prev.filter((_, i) => i !== idx));
   }
 
+  function showNotice(tone: 'ok' | 'error', text: string) {
+    setNotice({ tone, text });
+    setTimeout(() => setNotice(null), 4000);
+  }
+
+  function resetForm() {
+    setBrand('');
+    setModel('');
+    setReference('');
+    setYear('');
+    setPrice('');
+    setCaseSizeMm('');
+    setCondition('Excelente');
+    setDelivery('Full Set (Caja y papeles)');
+    setMovement('Automático');
+    setDescription('');
+    setImages([]);
+    setNewImageUrl('');
+  }
+
   async function handlePublishWatch(e: FormEvent) {
     e.preventDefault();
     setSubmitting(true);
@@ -226,7 +245,7 @@ export default function AdminPage() {
           delivery,
           movement,
           description,
-          images: images.length > 0 ? images : ['/demo/placeholder.svg'],
+          images,
           channels: {
             web: sendWeb,
             telegram: sendTelegram,
@@ -243,6 +262,8 @@ export default function AdminPage() {
 
       setDispatchResults(data.results ?? []);
       setLastWhatsappUrl(data.formatted?.whatsappShareUrl ?? null);
+      resetForm();
+      showNotice('ok', 'Reloj guardado.');
       await fetchWatches(adminKey);
     } catch {
       setSubmitError('Error de red al publicar el reloj.');
@@ -259,6 +280,8 @@ export default function AdminPage() {
         'x-admin-key': adminKey,
       },
       body: JSON.stringify({ id, status }),
+    }).then((r) => {
+      showNotice(r.ok ? 'ok' : 'error', r.ok ? 'Estado actualizado.' : 'No se pudo cambiar el estado.');
     });
     await fetchWatches(adminKey);
   }
@@ -274,6 +297,7 @@ export default function AdminPage() {
     });
     const data = await res.json();
     if (data.result) {
+      showNotice(data.result.ok ? 'ok' : 'error', data.result.detail);
       setDispatchResults([data.result]);
       if (channel === 'whatsapp' && data.result.externalUrl) {
         window.open(data.result.externalUrl, '_blank', 'noopener,noreferrer');
@@ -281,11 +305,13 @@ export default function AdminPage() {
     }
   }
 
-  async function handleDelete(id: string) {
-    await fetch(`/api/admin/watches?id=${encodeURIComponent(id)}`, {
+  async function handleDelete(id: string, label: string) {
+    if (!window.confirm(`¿Eliminar «${label}»? Esta acción no se puede deshacer.`)) return;
+    const res = await fetch(`/api/admin/watches?id=${encodeURIComponent(id)}`, {
       method: 'DELETE',
       headers: { 'x-admin-key': adminKey },
     });
+    showNotice(res.ok ? 'ok' : 'error', res.ok ? 'Reloj eliminado.' : 'No se pudo eliminar.');
     await fetchWatches(adminKey);
   }
 
@@ -307,28 +333,29 @@ export default function AdminPage() {
             <Logo />
             <span className="inline-flex items-center gap-1.5 rounded-full border border-gold/30 bg-gold/10 px-3 py-1 text-xs font-medium text-gold">
               <LockIcon className="h-3.5 w-3.5" />
-              Control Room
+              Admin
             </span>
           </div>
 
           <h1 className="mt-6 font-serif text-2xl font-semibold text-cream">
-            Panel de Publicación Omnicanal
+            Panel de relojes
           </h1>
           <p className="mt-2 text-sm text-muted">
-            Sube un reloj una sola vez y publícalo en la Web, Telegram y WhatsApp.
+            Sube un reloj una vez y publícalo en la web, Telegram y WhatsApp.
           </p>
 
           <form onSubmit={handleLogin} className="mt-6 space-y-4">
             <div>
               <label htmlFor="admin-key" className="mb-1.5 block text-xs font-medium text-cream">
-                Clave de acceso (`ADMIN_PASSWORD`)
+                Contraseña
               </label>
               <input
                 id="admin-key"
                 type="password"
                 value={adminKey}
                 onChange={(e) => setAdminKey(e.target.value)}
-                placeholder="Introduce la clave..."
+                placeholder="Tu contraseña"
+                autoComplete="current-password"
                 required
                 className="w-full rounded-xl border border-cream/15 bg-ink px-4 py-3 text-sm text-cream placeholder:text-muted/50 focus:border-gold"
               />
@@ -341,7 +368,7 @@ export default function AdminPage() {
               disabled={loadingList}
               className="btn-primary w-full py-3.5 text-sm"
             >
-              {loadingList ? 'Verificando...' : 'Entrar al panel /admin'}
+              {loadingList ? 'Comprobando…' : 'Entrar'}
             </button>
           </form>
 
@@ -363,13 +390,13 @@ export default function AdminPage() {
           <div className="flex items-center gap-4">
             <Logo />
             <span className="rounded-full border border-gold/40 bg-gold/10 px-3 py-1 text-xs font-semibold text-gold">
-              Admin · Publicador Omnicanal
+              Panel de relojes
             </span>
           </div>
 
           <div className="flex items-center gap-3 text-xs">
             <Link href="/relojes" className="btn-ghost px-4 py-2 text-xs">
-              Ver catálogo web ({watches.filter((w) => w.publishedChannels.web).length})
+              Ver catálogo ({watches.filter((w) => w.publishedChannels.web).length})
             </Link>
             <button
               type="button"
@@ -385,28 +412,41 @@ export default function AdminPage() {
         </div>
       </header>
 
+      {notice && (
+        <div
+          role="status"
+          className={`fixed bottom-4 right-4 z-50 max-w-sm rounded-xl border px-4 py-3 text-sm shadow-xl ${
+            notice.tone === 'ok'
+              ? 'border-emerald-500/40 bg-emerald-950 text-emerald-200'
+              : 'border-red-500/40 bg-red-950 text-red-200'
+          }`}
+        >
+          {notice.text}
+        </div>
+      )}
+
       <main className="container-page mt-8 space-y-12">
         {/* Estado de los 3 canales */}
         <section className="grid gap-4 sm:grid-cols-3">
           <div className="rounded-2xl border border-cream/10 bg-graphite/50 p-5">
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold uppercase tracking-wider text-gold">
-                1. Web Master Collections
+                Web
               </span>
               <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-950 px-2.5 py-0.5 text-[11px] text-emerald-300">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                100% Automático
+                Automático
               </span>
             </div>
             <p className="mt-2 text-xs text-muted">
-              Publica al instante en la sección de inicio (`/#relojes`) y en el catálogo (`/relojes`).
+              Se publica al instante en la home y en el catálogo.
             </p>
           </div>
 
           <div className="rounded-2xl border border-cream/10 bg-graphite/50 p-5">
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold uppercase tracking-wider text-action">
-                2. Canal / Grupo Telegram
+                Telegram
               </span>
               <span
                 className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] ${
@@ -420,20 +460,20 @@ export default function AdminPage() {
                     integrations?.telegramAuto ? 'bg-emerald-400' : 'bg-amber-400'
                   }`}
                 />
-                {integrations?.telegramAuto ? 'Bot API Conectado' : 'Modo 1-Clic (Falta Token)'}
+                {integrations?.telegramAuto ? 'Automático' : 'Manual'}
               </span>
             </div>
             <p className="mt-2 text-xs text-muted">
               {integrations?.telegramAuto
-                ? 'Envía foto/álbum + ficha HTML + botones automáticamente al grupo.'
-                : 'Configura TELEGRAM_BOT_TOKEN y TELEGRAM_CHAT_ID en el hosting para envío 100% automático.'}
+                ? 'Se envía solo al grupo, con foto y botones.'
+                : 'Te dejamos el texto listo para copiar. Para el envío automático falta conectar el bot de Telegram.'}
             </p>
           </div>
 
           <div className="rounded-2xl border border-cream/10 bg-graphite/50 p-5">
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold uppercase tracking-wider text-emerald-400">
-                3. Comunidad WhatsApp
+                WhatsApp
               </span>
               <span
                 className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] ${
@@ -443,11 +483,11 @@ export default function AdminPage() {
                 }`}
               >
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                {integrations?.whatsappAuto ? 'Webhook Activo' : ' Lanzador 1-Clic + Webhook'}
+                {integrations?.whatsappAuto ? 'Automático' : 'Manual'}
               </span>
             </div>
             <p className="mt-2 text-xs text-muted">
-              Genera el copy con formato nativo de WhatsApp + enlace directo `wa.me` y soporta Webhook automático (Whapi/Evolution).
+              Te dejamos el mensaje con formato de WhatsApp y un enlace para enviarlo con un clic.
             </p>
           </div>
         </section>
@@ -462,7 +502,7 @@ export default function AdminPage() {
             <div className="border-b border-cream/10 pb-4">
               <span className="eyebrow">Nueva pieza</span>
               <h2 className="mt-1 font-serif text-2xl font-semibold text-cream">
-                Subir reloj y distribuir a canales
+                Añadir un reloj
               </h2>
             </div>
 
@@ -591,12 +631,12 @@ export default function AdminPage() {
             {/* FOTOS DEL RELOJ */}
             <div>
               <label className="mb-1.5 block text-xs font-medium text-cream">
-                Fotos del reloj (sube archivos o pega URL)
+                Fotos
               </label>
               <div className="flex flex-wrap items-center gap-3">
                 <label className="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-gold/40 bg-gold/10 px-4 py-2.5 text-xs font-semibold text-gold-bright transition-colors hover:bg-gold/20">
                   <UploadIcon className="h-4 w-4" />
-                  {uploadingPhoto ? 'Subiendo...' : 'Subir fotos desde dispositivo'}
+                  {uploadingPhoto ? 'Subiendo…' : 'Subir fotos'}
                   <input
                     type="file"
                     accept="image/jpeg,image/png,image/webp,image/avif"
@@ -611,7 +651,7 @@ export default function AdminPage() {
                     type="text"
                     value={newImageUrl}
                     onChange={(e) => setNewImageUrl(e.target.value)}
-                    placeholder="O pega URL de imagen (https://...)"
+                    placeholder="O pega la URL de una imagen (https://…)"
                     className="w-full rounded-xl border border-cream/15 bg-ink px-3.5 py-2 text-xs text-cream"
                   />
                   <button
@@ -623,6 +663,12 @@ export default function AdminPage() {
                   </button>
                 </div>
               </div>
+
+              {images.length === 0 && (
+                <p className="mt-2 text-[11px] text-muted">
+                  Sin fotos se mostrará una imagen provisional.
+                </p>
+              )}
 
               {images.length > 0 && (
                 <div className="mt-3 flex flex-wrap gap-2.5">
@@ -636,8 +682,9 @@ export default function AdminPage() {
                       <button
                         type="button"
                         onClick={() => handleRemoveImage(i)}
-                        className="absolute right-1 top-1 rounded-full bg-black/80 p-1 text-red-400 opacity-0 transition-opacity group-hover:opacity-100"
+                        className="absolute right-1 top-1 rounded-full bg-black/80 p-1 text-red-400 transition-colors hover:bg-black"
                         title="Quitar foto"
+                        aria-label="Quitar foto"
                       >
                         <TrashIcon className="h-3 w-3" />
                       </button>
@@ -650,14 +697,14 @@ export default function AdminPage() {
             {/* DESCRIPCIÓN */}
             <div>
               <label className="mb-1.5 block text-xs font-medium text-cream">
-                Descripción y notas de Toni *
+                Descripción *
               </label>
               <textarea
                 rows={4}
                 required
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                placeholder="Estado real de la caja/brazalete, historial de revisión, qué incluye y por qué es buena oportunidad..."
+                placeholder="Estado de la caja y el brazalete, qué incluye, historial conocido…"
                 className="w-full rounded-xl border border-cream/15 bg-ink p-3.5 text-sm text-cream focus:border-gold"
               />
             </div>
@@ -665,7 +712,7 @@ export default function AdminPage() {
             {/* SELECTOR DE CANALES */}
             <div className="rounded-xl border border-cream/10 bg-ink/70 p-4">
               <span className="block text-xs font-semibold uppercase tracking-wider text-gold">
-                Dónde publicar al guardar:
+                Dónde publicar
               </span>
               <div className="mt-3 grid gap-3 sm:grid-cols-3">
                 <label className="flex cursor-pointer items-center gap-2.5 rounded-lg border border-cream/10 bg-graphite/60 p-3 text-xs font-medium text-cream">
@@ -676,7 +723,7 @@ export default function AdminPage() {
                     className="h-4 w-4 accent-gold"
                   />
                   <WatchIcon className="h-4 w-4 text-gold" />
-                  La Web (`/relojes`)
+                  Web
                 </label>
 
                 <label className="flex cursor-pointer items-center gap-2.5 rounded-lg border border-cream/10 bg-graphite/60 p-3 text-xs font-medium text-cream">
@@ -715,15 +762,19 @@ export default function AdminPage() {
               className="btn-primary w-full py-4 text-base"
             >
               {submitting
-                ? 'Publicando en los canales seleccionados...'
-                : 'Publicar reloj en Web + Telegram + WhatsApp'}
+                ? 'Publicando…'
+                : !sendWeb && !sendTelegram && !sendWhatsapp
+                  ? 'Guardar sin publicar'
+                  : `Publicar en ${[sendWeb && 'web', sendTelegram && 'Telegram', sendWhatsapp && 'WhatsApp']
+                      .filter(Boolean)
+                      .join(', ')}`}
             </button>
 
             {/* RESULTADO DEL ENVÍO MULTICANAL */}
             {dispatchResults && (
               <div className="space-y-3 rounded-xl border border-gold/40 bg-ink p-5">
                 <h3 className="font-serif text-lg font-semibold text-cream">
-                  Resultado de la distribución omnicanal
+                  Resultado de la publicación
                 </h3>
                 <ul className="space-y-2 text-xs">
                   {dispatchResults.map((r) => (
@@ -742,7 +793,7 @@ export default function AdminPage() {
                           rel="noopener noreferrer"
                           className="rounded-full bg-gold/20 px-3 py-1 font-semibold text-gold-bright hover:bg-gold/30"
                         >
-                          Abrir {r.channel === 'whatsapp' ? 'WhatsApp 1-Clic' : r.channel} →
+                          Abrir {r.channel === 'whatsapp' ? 'WhatsApp' : r.channel} →
                         </a>
                       )}
                     </li>
@@ -758,7 +809,7 @@ export default function AdminPage() {
                       className="inline-flex items-center gap-2 rounded-full bg-emerald-600 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-500"
                     >
                       <WhatsAppIcon className="h-4 w-4" />
-                      Enviar ahora al grupo de WhatsApp
+                      Enviar por WhatsApp
                     </a>
                     <button
                       type="button"
@@ -766,7 +817,7 @@ export default function AdminPage() {
                       className="inline-flex items-center gap-1.5 rounded-full border border-cream/20 px-4 py-2 text-xs text-cream hover:border-gold"
                     >
                       {copiedText ? <CheckIcon className="h-4 w-4 text-emerald-400" /> : <CopyIcon className="h-4 w-4" />}
-                      {copiedText ? '¡Texto copiado!' : 'Copiar texto formateado'}
+                      {copiedText ? 'Texto copiado' : 'Copiar texto'}
                     </button>
                   </div>
                 )}
@@ -779,9 +830,9 @@ export default function AdminPage() {
             <div className="rounded-2xl border border-cream/10 bg-graphite/60 p-6">
               <div className="flex items-center justify-between border-b border-cream/10 pb-4">
                 <div>
-                  <span className="eyebrow">Live Preview</span>
+                  <span className="eyebrow">Vista previa</span>
                   <h3 className="mt-1 font-serif text-xl font-semibold text-cream">
-                    Así se verá tu publicación
+                    Así se verá
                   </h3>
                 </div>
 
@@ -840,7 +891,7 @@ export default function AdminPage() {
                       className="inline-flex flex-1 items-center justify-center gap-2 rounded-full border border-cream/20 bg-ink px-4 py-2.5 text-xs font-medium text-cream hover:border-gold"
                     >
                       {copiedText ? <CheckIcon className="h-4 w-4 text-emerald-400" /> : <CopyIcon className="h-4 w-4" />}
-                      {copiedText ? '¡Copiado al portapapeles!' : 'Copiar mensaje WhatsApp'}
+                      {copiedText ? 'Copiado' : 'Copiar mensaje WhatsApp'}
                     </button>
                     <a
                       href={`https://wa.me/?text=${encodeURIComponent(liveWhatsappText)}`}
@@ -924,12 +975,18 @@ export default function AdminPage() {
         <section className="rounded-2xl border border-cream/10 bg-graphite/50 p-6 sm:p-8">
           <div className="flex flex-wrap items-center justify-between gap-4 border-b border-cream/10 pb-4">
             <div>
-              <span className="eyebrow">Inventario activo</span>
+              <span className="eyebrow">Catálogo</span>
               <h2 className="mt-1 font-serif text-2xl font-semibold text-cream">
-                Relojes en catálogo ({watches.length})
+                Relojes publicados ({watches.length})
               </h2>
             </div>
           </div>
+
+          {watches.length === 0 && (
+            <p className="mt-6 rounded-xl border border-dashed border-cream/15 p-6 text-center text-sm text-muted">
+              Aún no hay relojes. Añade el primero con el formulario de arriba.
+            </p>
+          )}
 
           <div className="mt-6 divide-y divide-cream/10">
             {watches.map((w) => (
@@ -970,9 +1027,9 @@ export default function AdminPage() {
                     aria-label={`Estado de ${w.brand} ${w.model}`}
                     className="rounded-full border border-cream/15 bg-ink px-3.5 py-1.5 text-xs font-medium text-cream focus:border-gold"
                   >
-                    <option value="disponible">🟢 Disponible</option>
-                    <option value="reservado">🟡 Reservado</option>
-                    <option value="vendido">🔴 Vendido</option>
+                    <option value="disponible">Disponible</option>
+                    <option value="reservado">Reservado</option>
+                    <option value="vendido">Vendido</option>
                   </select>
 
                   <button
@@ -997,9 +1054,10 @@ export default function AdminPage() {
 
                   <button
                     type="button"
-                    onClick={() => void handleDelete(w.id)}
+                    onClick={() => void handleDelete(w.id, `${w.brand} ${w.model}`)}
                     className="inline-flex items-center justify-center rounded-full border border-red-500/30 bg-red-950/40 p-2 text-red-300 hover:bg-red-900/50"
                     title="Eliminar reloj"
+                    aria-label={`Eliminar ${w.brand} ${w.model}`}
                   >
                     <TrashIcon className="h-4 w-4" />
                   </button>
